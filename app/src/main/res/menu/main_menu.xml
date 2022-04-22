@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home"
+            android:title="Home"/>
+
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_person"
+            android:title="My Account" />
+
+        <item
+            android:id="@+id/nav_workers"
+            android:icon="@drawable/ic_baseline_support_agent_24"
+            android:title="Registered workers" />
+
+        <item
+            android:id="@+id/nav_Calendar"
+            android:icon="@drawable/ic_calendar"
+            android:title="Calendar" />
+
+    </group>
+
+    <group android:checkableBehavior="single">
+
+        <item android:title="Logout">
+
+            <menu>
+
+                <item
+                    android:id="@+id/nav_logout"
+                    android:icon="@drawable/logout_icon"
+                    android:title="Logout"/>
+            </menu>
+
+
+        </item>
+
+    </group>
+
+    <item android:title="Communicate">
+
+        <menu>
+
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_baseline_share_24"
+                android:title="Share" />
+
+            <item
+                android:id="@+id/nav_rate"
+                android:icon="@drawable/ic_baseline_star_rate_24"
+                android:title="Rate Us" />
+
+        </menu>
+
+
+
+    </item>
+
+</menu>

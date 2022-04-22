@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "330902151792",
+    "project_id": "visteon-73786",
+    "storage_bucket": "visteon-73786.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:330902151792:android:41764ccc73d52f3c980ab5",
+        "android_client_info": {
+          "package_name": "com.example.magasin_cms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "330902151792-0a5avjl09bvn9msrneechni6963bjogs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnrepih4A6pT-gG0djcHZdv0tBnddt33s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "330902151792-0a5avjl09bvn9msrneechni6963bjogs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
