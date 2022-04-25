@@ -28,7 +28,7 @@
                     android:id="@+id/username"
                     android:layout_marginTop="15dp"
                     android:textSize="20sp"
-                    android:textStyle="bold"
+                    android:textStyle="italic"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_width="match_parent"
@@ -62,32 +62,8 @@
                         android:textColor="@color/black"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"/>
-                    <View
-                        android:background="#79D6D1D1"
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"/>
-                    <TextView
-                        android:layout_weight="1"
-                        android:text="Temperature and Humidity"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        android:textSize="11sp"
-                        android:textColor="#636262"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
-                    <View
-                        android:background="#79D6D1D1"
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"/>
-                    <TextView
-                        android:layout_weight="1"
-                        android:text="Task Management"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        android:textSize="14sp"
-                        android:textColor="#636262"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
+
+
 
 
                 </LinearLayout>
