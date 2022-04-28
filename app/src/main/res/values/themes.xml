@@ -16,6 +16,13 @@
         <item name="colorControlNormal">@android:color/white</item>
     </style>
 
+    <style name="AppTheme.Dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <!-- Customize your theme here. -->
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
     <style name="Circular">
         <item name="cornerSize">50%</item>
 
@@ -24,6 +31,13 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+    
+    <style name="MyRatingBar" parent="Widget.AppCompat.RatingBar">
+        <!--non selected star color-->
+        <item name="colorControlNormal">#4D000000</item>
+        <!--selected star color-->
+        <item name="colorControlActivated">@color/dialog_color_1</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

@@ -155,6 +155,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/addNewTask"
             android:text="Add task"
+            android:onClick="SendData"
             android:background="@drawable/btn_background"
             android:textColor="@color/colorPrimary"
             android:layout_marginTop="40dp" />

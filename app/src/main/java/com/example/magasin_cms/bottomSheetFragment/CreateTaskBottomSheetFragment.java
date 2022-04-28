@@ -18,9 +18,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
-import com.example.magasin_cms.Model_Task.Task;
 import com.example.magasin_cms.R;
 import com.example.magasin_cms.TaskManagementActivity;
+
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -35,7 +35,7 @@ import static android.content.Context.ALARM_SERVICE;
 
 public class CreateTaskBottomSheetFragment extends BottomSheetDialogFragment {
 
-    Unbinder unbinder;
+   /* Unbinder unbinder;
     @BindView(R.id.addTaskTitle)
     EditText addTaskTitle;
     @BindView(R.id.addTaskDescription)
@@ -44,7 +44,7 @@ public class CreateTaskBottomSheetFragment extends BottomSheetDialogFragment {
     EditText taskDate;
     @BindView(R.id.taskTime)
     EditText taskTime;
-    @BindView(R.id.taskEvent)
+    @BindView(R.id.taskReciever)
     EditText taskEvent;
     @BindView(R.id.addTask)
     Button addTask;
@@ -95,7 +95,7 @@ public class CreateTaskBottomSheetFragment extends BottomSheetDialogFragment {
                 createTask();
         });
         if (isEdit) {
-            showTaskFromId();
+            //showTaskFromId();
         }
 
         taskDate.setOnTouchListener((view, motionEvent) -> {
@@ -292,6 +292,6 @@ public class CreateTaskBottomSheetFragment extends BottomSheetDialogFragment {
 
     public interface setRefreshListener {
         void refresh();
-    }
-}
+    }*/
+
 }

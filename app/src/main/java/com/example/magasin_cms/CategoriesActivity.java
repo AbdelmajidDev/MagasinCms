@@ -113,6 +113,9 @@ public void ClickProfile(View view){
     redirectActivity(this,HomeActivity.class);
 
 }
+public void ClickRate(View view){
+    redirectActivity(this,RateUsActivity.class);
+}
 
 public void ClickTemperature(View view){
     redirectActivity(this,TemperatureActivity.class);
@@ -120,6 +123,10 @@ public void ClickTemperature(View view){
 
 public void ClickTaskManagment(View view){
     redirectActivity(this,TaskManagementActivity.class);
+}
+
+public void ClickCalendar(View view){
+    redirectActivity(this,CalendarActivity.class);
 }
 /*public void ClickAbout(View view){
 

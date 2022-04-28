@@ -1,17 +1,22 @@
 package com.example.magasin_cms;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -19,6 +24,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+
+import static android.content.ContentValues.TAG;
 
 public class AddTask extends AppCompatActivity {
     EditText AddTaskTitle, AddTaskDescription, AddTaskDate, AddTaskTime, AddTaskReciever;
@@ -40,10 +47,10 @@ public class AddTask extends AppCompatActivity {
         AddTaskDescription = findViewById(R.id.addTaskDescription);
         AddTaskDate = findViewById(R.id.taskDate);
         AddTaskTime = findViewById(R.id.taskTime);
-        AddNewTask=findViewById(R.id.addNewTask);
+        AddNewTask = findViewById(R.id.addNewTask);
         AddTaskReciever = findViewById(R.id.taskReciever);
-        fAuth=FirebaseAuth.getInstance();
-        fStore=FirebaseFirestore.getInstance();
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
 
         AddTaskDate.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
@@ -53,7 +60,7 @@ public class AddTask extends AppCompatActivity {
                 mDay = c.get(Calendar.DAY_OF_MONTH);
                 datePickerDialog = new DatePickerDialog(this,
                         (view1, year, monthOfYear, dayOfMonth) -> {
-                    String  specificDate=dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                            String specificDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
                             AddTaskDate.setText(specificDate);
                             datePickerDialog.dismiss();
                         }, mYear, mMonth, mDay);
@@ -64,7 +71,7 @@ public class AddTask extends AppCompatActivity {
         });
 
         AddTaskTime.setOnTouchListener((view, motionEvent) -> {
-            if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
+            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                 // Get Current Time
                 final Calendar c = Calendar.getInstance();
                 mHour = c.get(Calendar.HOUR_OF_DAY);
@@ -81,39 +88,63 @@ public class AddTask extends AppCompatActivity {
             return true;
         });
 
-        AddNewTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                userID=fAuth.getCurrentUser().getUid();
-                DocumentReference documentReference=fStore.collection("Tasks").document(userID);
-                Map<String,Object> user= new HashMap<>();
+    }
 
-                user.put("Ttime",AddTaskTime);
-                user.put("Tdate",AddTaskDate);
-       /* user.put("Email",email);
-        user.put("Phone",Phone);
-        user.put("Position",Position);*/
+    public void SendData(View view) {
+        String Title = AddTaskTitle.getText().toString().trim();
+        String Description = AddTaskDescription.getText().toString().trim();
+        String Date = AddTaskDate.getText().toString().trim();
+        String Time = AddTaskTime.getText().toString().trim();
+        String Receiver = AddTaskReciever.getText().toString().trim();
 
-        /*Toast.makeText(getApplicationContext(),"You're good to go!",Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(getApplicationContext(),MainActivity.class));*/
+        if (Title.isEmpty()) {
+            AddTaskTitle.setError("Title is Required");
+            return;
+        }
+        if (Description.isEmpty()) {
+            AddTaskDescription.setError("Description is Required");
+            return;
+        }
+        if (Date .isEmpty()) {
+            AddTaskDate.setError("Date is Required");
+            return;
+        }
+        if (Time .isEmpty()) {
+            AddTaskTime.setError("Time Number is Required");
+            return;
+        }
+        if (Receiver.isEmpty()) {
+            AddTaskReciever.setError("choose a receiver");
+            return;
+        }
+
+
+
+
+                userID = fAuth.getCurrentUser().getUid();
+                DocumentReference documentReference = fStore.collection("tasks").document(userID);
+                Map<String, Object> task = new HashMap<>();
+
+                 task.put("Ttitle", Title);
+                 task.put("Tdescription", Description);
+                 task.put("Tdate", Date);
+                 task.put("Ttime", Time);
+                 task.put("Treceiver", Receiver);
+
+                Toast.makeText(getApplicationContext(), "You're good to go!", Toast.LENGTH_SHORT).show();
+
+
+                documentReference.set(task).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "C bon!!!!" + userID);
+                    }
+                });
+
+
             }
-        });
-    }
-    /*public void SendTask() {
-        userID = fAuth.getCurrentUser().getUid();
-        DocumentReference documentReference = fStore.collection("Tasks").document(userID);
-        Map<String, Object> user = new HashMap<>();
 
-        user.put("Ttime", AddTaskTime);
-        user.put("Tdate", AddTaskDate);
-        user.put("Email", email);
-        user.put("Phone", Phone);
-        user.put("Position", Position);*/
+}
 
-        /*Toast.makeText(getApplicationContext(),"You're good to go!",Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(getApplicationContext(),MainActivity.class));*/
-
-
-    }
 
 

@@ -84,6 +84,8 @@ dependencies {
         exclude group: 'glide-parent'
     }
 
+    implementation 'com.firebaseui:firebase-ui-database:8.0.0'
+
     //noinspection GradleCompatible
     compile 'com.android.support:design:26.1.0'
 

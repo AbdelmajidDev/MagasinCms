@@ -22,4 +22,7 @@
     <color name="color_one">#192A56</color>
     <color name="color_two">#0A3D62</color>
 
+    <color name="dialog_color_1">#FDD736</color>
+    <color name="dialog_color_2">#385796</color>
+
 </resources>
