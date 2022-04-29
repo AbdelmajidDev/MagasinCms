@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +35,7 @@ RadioButton male,female;
 RadioGroup rad;
 Button sign;
 String gender;
+String csID;
 String userID;
 FirebaseAuth fAuth;
 FirebaseFirestore fStore;
@@ -133,6 +135,9 @@ FirebaseFirestore fStore;
                     repass.setError("Password confirmation Doesn't match password");
                     return;
                 }
+                int i=FullName.indexOf(" ")+1;
+                int y=i+7;
+                csID=FullName.substring(0,1)+FullName.substring(i,y);
 
                 fAuth.createUserWithEmailAndPassword(email,Password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
@@ -140,14 +145,14 @@ FirebaseFirestore fStore;
                         userID=fAuth.getCurrentUser().getUid();
                         DocumentReference documentReference=fStore.collection("users").document(userID);
                         Map<String,Object> user= new HashMap<>();
-
+                        user.put("csID",csID);
                         user.put("Fname",FullName);
                         user.put("Gender",gender);
                         user.put("Email",email);
                         user.put("Phone",Phone);
                         user.put("Position",Position);
 
-                        Toast.makeText(getApplicationContext(),"You're good to go!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"You're good to go!",Toast.LENGTH_LONG).show();
                         startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         finish();
 

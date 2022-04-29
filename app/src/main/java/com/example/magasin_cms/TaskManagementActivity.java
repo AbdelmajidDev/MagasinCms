@@ -19,6 +19,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import butterknife.BindView;
 
@@ -27,7 +29,7 @@ public class TaskManagementActivity extends AppCompatActivity {
     TextView addTask;
 
     //Firebase
-    private DatabaseReference mDataBase;
+    private DocumentReference mDataBase;
     private FirebaseAuth mAuth;
 
     //Recycler
@@ -37,13 +39,15 @@ public class TaskManagementActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_management);
         addTask = findViewById(R.id.addTask);
+        FirebaseUser work=FirebaseAuth.getInstance().getCurrentUser();
+        String CurrentId=work.getUid();
+       // DocumentReference reference;
+        FirebaseFirestore firestore=FirebaseFirestore.getInstance();
 
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser mUser = mAuth.getCurrentUser();
-        String uId = mUser.getUid();
+        mDataBase=firestore.collection("tasks").document(CurrentId);
+        mDataBase.get();
 
-        mDataBase = FirebaseDatabase.getInstance().getReference().child("tasks").child(uId);
-        mDataBase.keepSynced(true);
+        //mDataBase = FirebaseDatabase.getInstance().getReference().child("tasks").child(uId);
         //Recycler
 
         recyclerView = findViewById(R.id.taskRecycler);
@@ -62,7 +66,7 @@ public class TaskManagementActivity extends AppCompatActivity {
 
     }
 
-    @Override
+    /*@Override
     protected void onStart() {
         super.onStart();
 
@@ -111,5 +115,5 @@ public class TaskManagementActivity extends AppCompatActivity {
             TextView mDate = myview.findViewById(R.id.date);
             mDate.setText(date);
         }
-    }
+    }*/
 }
