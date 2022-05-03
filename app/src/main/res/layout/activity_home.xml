@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <Button
-                    android:id="@+id/logout"
+                    android:id="@+id/back_btn"
                     android:padding="5dp"
                     android:layout_alignParentStart="true"
                     android:background="@drawable/ic_arrow"
@@ -92,6 +92,16 @@
 
             <include layout="@layout/item_info"/>
             <include layout="@layout/item_email"/>
+
+            <Button
+                android:id="@+id/upload_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/round_back_while_stroke_1000"
+                android:backgroundTint="@color/colorAccent"
+                android:text="Upload Image"/>
 
         </LinearLayout>
     </ScrollView>

@@ -94,24 +94,24 @@
 
             </LinearLayout>
 
+
             <TextView
                 android:id="@+id/details"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="20dp"
                 android:text="Details"
-                android:textSize="15sp"
                 android:textColor="@color/lightWhite"
-                android:layout_weight="1"/>
+                android:textSize="15sp" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
                 tools:text=""
-                android:singleLine="true"
-                android:alpha="0.5"
                 android:id="@+id/time"
                 android:textSize="12sp"
                 android:textColor="@android:color/black"/>
+
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -126,6 +126,26 @@
                 android:paddingRight="10dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp" />
+
+            <LinearLayout
+                android:layout_marginTop="-20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                android:background="@drawable/round_back_while_stroke_1000" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete"
+                android:background="@drawable/round_back_while_stroke_1000" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

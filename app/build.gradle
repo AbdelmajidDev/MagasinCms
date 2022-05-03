@@ -85,6 +85,9 @@ dependencies {
     }
 
     implementation 'com.firebaseui:firebase-ui-database:8.0.0'
+    implementation 'com.google.firebase:firebase-storage:11.0.4'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation  'com.dialog:plus:4+'
 
     //noinspection GradleCompatible
     compile 'com.android.support:design:26.1.0'

@@ -150,15 +150,32 @@
             android:id="@+id/taskReciever"
             tools:ignore="MissingPrefix" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/addNewTask"
             android:text="Add task"
+            android:layout_weight="1"
+            android:background="@drawable/btn_background"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="40dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/back_button"
+            android:layout_weight="1"
+            android:text="Back"
             android:onClick="SendData"
             android:background="@drawable/btn_background"
             android:textColor="@color/colorPrimary"
             android:layout_marginTop="40dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

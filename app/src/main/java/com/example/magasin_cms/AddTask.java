@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -31,7 +32,7 @@ public class AddTask extends AppCompatActivity {
     EditText AddTaskTitle, AddTaskDescription, AddTaskDate, AddTaskTime, AddTaskReciever;
     int mYear, mMonth, mDay;
     int mHour, mMinute;
-    Button AddNewTask;
+    Button AddNewTask, Back_btn;
     DatePickerDialog datePickerDialog;
     TimePickerDialog timePickerDialog;
     FirebaseAuth fAuth;
@@ -48,6 +49,7 @@ public class AddTask extends AppCompatActivity {
         AddTaskDate = findViewById(R.id.taskDate);
         AddTaskTime = findViewById(R.id.taskTime);
         AddNewTask = findViewById(R.id.addNewTask);
+        Back_btn = findViewById(R.id.back_button);
         AddTaskReciever = findViewById(R.id.taskReciever);
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -88,6 +90,50 @@ public class AddTask extends AppCompatActivity {
             return true;
         });
 
+        Back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),TaskManagementActivity.class));
+                finish();
+            }
+        });
+
+        AddNewTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                processinsert();
+            }
+        });
+
+    }
+
+    private void processinsert() {
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("title",AddTaskTitle.getText().toString());
+        map.put("description",AddTaskDescription.getText().toString());
+        map.put("time",AddTaskTime.getText().toString());
+        map.put("date",AddTaskDate.getText().toString());
+        map.put("receiver",AddTaskReciever.getText().toString());
+        FirebaseDatabase.getInstance().getReference().child("tasks").push()
+                .setValue(map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        AddTaskTitle.setText("");
+                        AddTaskDescription.setText("");
+                        AddTaskTime.setText("");
+                        AddTaskDate.setText("");
+                        AddTaskReciever.setText("");
+                        Toast.makeText(getApplicationContext(),"Inserted Successfully",Toast.LENGTH_LONG).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(),"Could not insert",Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     public void SendData(View view) {

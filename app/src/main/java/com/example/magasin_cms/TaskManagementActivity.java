@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.magasin_cms.Adapter.AddTaskAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 
 import android.content.Intent;
@@ -25,15 +27,16 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import butterknife.BindView;
 
 public class TaskManagementActivity extends AppCompatActivity {
-    @BindView(R.id.addTask)
+
     TextView addTask;
+    AddTaskAdapter adapter;
 
     //Firebase
     private DocumentReference mDataBase;
     private FirebaseAuth mAuth;
 
     //Recycler
-    private RecyclerView recyclerView;
+     RecyclerView recyclerView;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,15 @@ public class TaskManagementActivity extends AppCompatActivity {
         layoutManager.setStackFromEnd(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
+
+        FirebaseRecyclerOptions<TaskModel> options=
+                new FirebaseRecyclerOptions.Builder<TaskModel>()
+                .setQuery(FirebaseDatabase.getInstance().getReference().child("tasks"),TaskModel.class)
+                        .build();
+
+        adapter = new AddTaskAdapter(options);
+        recyclerView.setAdapter(adapter);
+
         addTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,6 +76,18 @@ public class TaskManagementActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 
     /*@Override
