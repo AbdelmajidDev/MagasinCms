@@ -2,41 +2,52 @@ package com.example.magasin_cms;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.magasin_cms.Adapter.AddTaskAdapter;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.magasin_cms.Model.TaskModel;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firebase.ui.firestore.ObservableSnapshotArray;
+import com.firebase.ui.firestore.SnapshotParser;
+import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
+import com.firebase.ui.firestore.paging.FirestorePagingOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
-import butterknife.BindView;
+import org.w3c.dom.Text;
 
 public class TaskManagementActivity extends AppCompatActivity {
 
     TextView addTask;
-    AddTaskAdapter adapter;
 
+ObservableSnapshotArray<TaskModel> id;
     //Firebase
     private DocumentReference mDataBase;
     private FirebaseAuth mAuth;
 
+    private FirestoreRecyclerAdapter adapter;
+
     //Recycler
      RecyclerView recyclerView;
+    private FirebaseFirestore firebaseFirestore;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,27 +56,82 @@ public class TaskManagementActivity extends AppCompatActivity {
         FirebaseUser work=FirebaseAuth.getInstance().getCurrentUser();
         String CurrentId=work.getUid();
        // DocumentReference reference;
-        FirebaseFirestore firestore=FirebaseFirestore.getInstance();
+        firebaseFirestore=FirebaseFirestore.getInstance();
 
-        mDataBase=firestore.collection("tasks").document(CurrentId);
-        mDataBase.get();
+
+       /* mDataBase=firestore.collection("tasks").document(CurrentId);
+        mDataBase.get();*/
 
         //mDataBase = FirebaseDatabase.getInstance().getReference().child("tasks").child(uId);
         //Recycler
 
         recyclerView = findViewById(R.id.taskRecycler);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        //layoutManager.setReverseLayout(true);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(layoutManager);
+        //layoutManager.setStackFromEnd(false);
 
-        FirebaseRecyclerOptions<TaskModel> options=
+
+
+        Query query = FirebaseFirestore.getInstance()
+                .collection("tasks")
+                ;
+
+        FirestoreRecyclerOptions<TaskModel> options = new FirestoreRecyclerOptions.Builder<TaskModel>()
+                .setQuery(query, new SnapshotParser<TaskModel>() {
+                    @NonNull
+                    @Override
+                    public TaskModel parseSnapshot(@NonNull DocumentSnapshot snapshot) {
+                        TaskModel taskModel=snapshot.toObject(TaskModel.class);
+                        String item_id=snapshot.getId();
+                        taskModel.setItem_id(item_id);
+                        return taskModel;
+                    }
+                })
+                .build();
+        //id=options.getSnapshots();
+         adapter= new FirestoreRecyclerAdapter<TaskModel, TaskViewHolder>(options) {
+            @NonNull
+            @Override
+            public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_task,parent,false);
+                return new TaskViewHolder(v);
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull TaskViewHolder holder, int position, @NonNull TaskModel model) {
+                holder.task_title.setText(model.getTitle());
+                holder.task_details.setText(model.getDescription());
+                holder.task_receiver.setText(model.getReceiver());
+                holder.task_date.setText(model.getDate());
+
+
+                holder.Task_Card.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+
+                        Intent intent=new Intent(getApplicationContext(),specificActivity.class);
+                        intent.putExtra("a",model.getDate());
+                        intent.putExtra("b",model.getTitle());
+                        intent.putExtra("c",model.getDescription());
+                        intent.putExtra("d",model.getReceiver());
+                        intent.putExtra("e",model.getItem_id());
+                        startActivity(intent);
+                    }
+                });
+            }
+        };
+
+
+        //recyclerView.setLayoutManager(layoutManager);
+
+        /*FirebaseRecyclerOptions<TaskModel> options=
                 new FirebaseRecyclerOptions.Builder<TaskModel>()
-                .setQuery(FirebaseDatabase.getInstance().getReference().child("tasks"),TaskModel.class)
-                        .build();
+                .setQuery(mDataBase,TaskModel.class)
+                        .build();*/
 
-        adapter = new AddTaskAdapter(options);
+
         recyclerView.setAdapter(adapter);
 
         addTask.setOnClickListener(new View.OnClickListener() {
@@ -78,16 +144,31 @@ public class TaskManagementActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        adapter.startListening();
+
+    private class TaskViewHolder extends RecyclerView.ViewHolder {
+            TextView task_title , task_details, task_receiver , task_date;
+            CardView Task_Card;
+        public TaskViewHolder(@NonNull View itemView) {
+            super(itemView);
+            Task_Card=itemView.findViewById(R.id.Task_Card);
+            task_title = itemView.findViewById(R.id.title);
+            task_details = itemView.findViewById(R.id.details);
+            task_receiver = itemView.findViewById(R.id.status);
+            task_date = itemView.findViewById(R.id.date);
+
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         adapter.stopListening();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
     }
 
     /*@Override

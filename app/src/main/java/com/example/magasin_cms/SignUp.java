@@ -30,7 +30,7 @@ import java.util.Map;
 import static android.content.ContentValues.TAG;
 
 public class SignUp extends AppCompatActivity implements SingleChoiceDialogFragment.SingleChoiceListener {
-EditText name,mail,phone,pass,repass,pos;
+EditText name,phone,pass,repass,dep;
 RadioButton male,female;
 RadioGroup rad;
 Button sign;
@@ -50,9 +50,9 @@ FirebaseFirestore fStore;
         setContentView(R.layout.activity_sign_up);
 
         rad=findViewById(R.id.rad);
-        pos=findViewById(R.id.pos);
+        dep=findViewById(R.id.dep);
         name=findViewById(R.id.Name);
-        mail=findViewById(R.id.Smail);
+        //mail=findViewById(R.id.Smail);
         phone=findViewById(R.id.phone);
         pass=findViewById(R.id.Spsd);
         repass=findViewById(R.id.repsd);
@@ -63,10 +63,10 @@ FirebaseFirestore fStore;
         fStore=FirebaseFirestore.getInstance();
 
 
-        pos.setOnClickListener(new View.OnClickListener() {
+        dep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pos.setText(null);
+                dep.setText(null);
                 DialogFragment singleChoiceDialog=new SingleChoiceDialogFragment();
                 singleChoiceDialog.setCancelable(false);
                 singleChoiceDialog.show(getSupportFragmentManager(),"Single Choice Dialog");
@@ -77,11 +77,11 @@ FirebaseFirestore fStore;
             @Override
             public void onClick(View view) {
                 String FullName=name.getText().toString().trim();
-                String email=mail.getText().toString().trim();
+                //String email=mail.getText().toString().trim();
                 String Phone=phone.getText().toString().trim();
                 String Password=pass.getText().toString().trim();
                 String ConfPassword=repass.getText().toString().trim();
-                String Position=pos.getText().toString().trim();
+                String Department=dep.getText().toString().trim();
                   if(male.isChecked())
                 {
                     gender="Male";
@@ -95,11 +95,13 @@ FirebaseFirestore fStore;
                 name.setError("Name is Required");
                 return;
                 }
-                if (email.isEmpty())
+
+
+                /*if (email.isEmpty())
                 {
                     mail.setError("E-Mail is Required");
                     return;
-                }
+                }*/
                 if (Phone.isEmpty())
                 {
                     phone.setError("Phone Number is Required");
@@ -113,9 +115,9 @@ FirebaseFirestore fStore;
                     return;
 
                 }
-                if (Position.isEmpty())
+                if (Department.isEmpty())
                 {
-                    pos.setError("Position is Required");
+                    dep.setError("Position is Required");
                     return;
                 }
                 if (Password.isEmpty())
@@ -135,11 +137,16 @@ FirebaseFirestore fStore;
                     repass.setError("Password confirmation Doesn't match password");
                     return;
                 }
-                int i=FullName.indexOf(" ")+1;
-                int y=i+7;
-                csID=FullName.substring(0,1)+FullName.substring(i,y);
 
-                fAuth.createUserWithEmailAndPassword(email,Password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        int i=FullName.indexOf(" ")+1;
+                        int y=i+7;
+                        csID=FullName.substring(0,1)+FullName.substring(i,y);
+                        String mail=csID+"@visteon.com";
+
+
+
+
+                fAuth.createUserWithEmailAndPassword(mail,Password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         userID=fAuth.getCurrentUser().getUid();
@@ -148,9 +155,9 @@ FirebaseFirestore fStore;
                         user.put("csID",csID);
                         user.put("Fname",FullName);
                         user.put("Gender",gender);
-                        user.put("Email",email);
+                        user.put("Email",mail);
                         user.put("Phone",Phone);
-                        user.put("Position",Position);
+                        user.put("Department",Department);
 
                         Toast.makeText(getApplicationContext(),"You're good to go!",Toast.LENGTH_LONG).show();
                         startActivity(new Intent(getApplicationContext(),MainActivity.class));
@@ -179,7 +186,7 @@ FirebaseFirestore fStore;
 
     @Override
     public void onPositiveButtonClicked(String[] options, int def) {
-        pos.setText(options[def]);
+        dep.setText(options[def]);
     }
 
     @Override

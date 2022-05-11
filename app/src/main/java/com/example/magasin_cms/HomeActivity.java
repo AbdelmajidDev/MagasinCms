@@ -136,8 +136,7 @@ public class HomeActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAuth.signOut();
-                finishAffinity();
+                finish();
             }
         });
         upload_button.setOnClickListener(new View.OnClickListener() {
@@ -156,9 +155,9 @@ public class HomeActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists() && snapshot.getChildrenCount() > 0)
                 {
-                    if (snapshot.hasChild("image"))
+                    if (snapshot.hasChild("Profile_Pic"))
                     {
-                        String image = snapshot.child("image").getValue().toString();
+                        String image = snapshot.child("Profile_Pic").getValue().toString();
                         Picasso.get().load(image).into(userImage);
                     }
                 }
@@ -199,7 +198,7 @@ public class HomeActivity extends AppCompatActivity {
                         myUri = dowloadUrl.toString();
 
                         HashMap<String,Object> userMap = new HashMap<>();
-                        userMap.put("image",myUri);
+                        userMap.put("Profile_Pic",myUri);
 
                         databaseReference.child(mAuth.getCurrentUser().getUid()).updateChildren(userMap);
                         pd.dismiss();

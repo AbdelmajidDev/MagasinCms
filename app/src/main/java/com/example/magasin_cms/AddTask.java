@@ -62,7 +62,7 @@ public class AddTask extends AppCompatActivity {
                 mDay = c.get(Calendar.DAY_OF_MONTH);
                 datePickerDialog = new DatePickerDialog(this,
                         (view1, year, monthOfYear, dayOfMonth) -> {
-                            String specificDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                            String specificDate = dayOfMonth + "-" + (monthOfYear + 1) +"-"+(mYear);
                             AddTaskDate.setText(specificDate);
                             datePickerDialog.dismiss();
                         }, mYear, mMonth, mDay);
@@ -82,7 +82,7 @@ public class AddTask extends AppCompatActivity {
                 // Launch Time Picker Dialog
                 timePickerDialog = new TimePickerDialog(this,
                         (view12, hourOfDay, minute) -> {
-                            AddTaskTime.setText(hourOfDay + ":" + minute);
+                            //AddTaskTime.setText(hourOfDay + ":" + minute);
                             timePickerDialog.dismiss();
                         }, mHour, mMinute, false);
                 timePickerDialog.show();
@@ -93,7 +93,6 @@ public class AddTask extends AppCompatActivity {
         Back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),TaskManagementActivity.class));
                 finish();
             }
         });
@@ -101,7 +100,7 @@ public class AddTask extends AppCompatActivity {
         AddNewTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                processinsert();
+                SendData(view);
             }
         });
 
@@ -155,10 +154,7 @@ public class AddTask extends AppCompatActivity {
             AddTaskDate.setError("Date is Required");
             return;
         }
-        if (Time .isEmpty()) {
-            AddTaskTime.setError("Time Number is Required");
-            return;
-        }
+
         if (Receiver.isEmpty()) {
             AddTaskReciever.setError("choose a receiver");
             return;
@@ -171,11 +167,11 @@ public class AddTask extends AppCompatActivity {
                 DocumentReference documentReference = fStore.collection("tasks").document(userID);
                 Map<String, Object> task = new HashMap<>();
 
-                 task.put("Ttitle", Title);
-                 task.put("Tdescription", Description);
-                 task.put("Tdate", Date);
-                 task.put("Ttime", Time);
-                 task.put("Treceiver", Receiver);
+                 task.put("title", Title);
+                 task.put("description", Description);
+                 task.put("date", Date);
+                 task.put("time", Time);
+                 task.put("receiver", Receiver);
 
                 Toast.makeText(getApplicationContext(), "You're good to go!", Toast.LENGTH_SHORT).show();
 

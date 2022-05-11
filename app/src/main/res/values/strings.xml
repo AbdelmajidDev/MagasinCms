@@ -7,7 +7,7 @@
         <item>four</item>
         <item>five</item>
     </string-array>
-
+    <string name="passfield">Password</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="title_activity_dashboard">Dashboard</string>

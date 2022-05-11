@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatRatingBar;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
@@ -54,10 +55,16 @@ public class RateUsActivity extends AppCompatActivity {
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean b) {
                 if (rating <= 1) {
                     ratingImage.setImageResource(R.drawable.angry);
+                    Intent intent=new Intent(getApplicationContext(),Report.class);
+                    startActivity(intent);
                 } else if (rating <= 2) {
                     ratingImage.setImageResource(R.drawable.sad);
+                    Intent intent=new Intent(getApplicationContext(),Report.class);
+                    startActivity(intent);
                 } else if (rating <= 3) {
                     ratingImage.setImageResource(R.drawable.confused);
+                    Intent intent=new Intent(getApplicationContext(),Report.class);
+                    startActivity(intent);
                 } else if (rating <= 4) {
                     ratingImage.setImageResource(R.drawable.smile);
                 } else if (rating <= 5) {

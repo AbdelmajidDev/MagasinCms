@@ -1,22 +1,26 @@
 package com.example.magasin_cms.Model;
 
 public class TaskModel {
+    private String item_id;
     private String title;
     private String description;
     private String date;
     private String time;
     private String receiver;
 
+
+
     public TaskModel(){
 
     }
 
-    public TaskModel(String title, String description, String date, String time, String receiver) {
+    public TaskModel(String title, String description, String date, String time, String receiver,String item_id) {
         this.title = title;
         this.description = description;
         this.date = date;
         this.time = time;
         this.receiver = receiver;
+        this.item_id=item_id;
     }
 
     public String getTitle() {
@@ -57,5 +61,13 @@ public class TaskModel {
 
     public void setReceiver(String receiver) {
         this.receiver = receiver;
+    }
+
+    public String getItem_id() {
+        return item_id;
+    }
+
+    public void setItem_id(String item_id) {
+        this.item_id = item_id;
     }
 }

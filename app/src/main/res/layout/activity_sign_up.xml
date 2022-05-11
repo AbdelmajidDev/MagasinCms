@@ -72,26 +72,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        android:text="E-mail"
-                        android:textAllCaps="true"
-                        android:textColor="@color/white"
-                        android:textSize="15sp" />
 
-                    <EditText
-                        android:id="@+id/Smail"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/et_bg"
-                        android:fontFamily="sans-serif-light"
-                        android:paddingLeft="15dp"
-                        android:paddingRight="15dp"
-                        android:textColor="@color/white"
-                        android:textSize="15sp" />
 
                 </LinearLayout>
 
@@ -172,13 +153,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="Position"
+                        android:text="Department"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
 
                     <EditText
-                        android:id="@+id/pos"
+                        android:id="@+id/dep"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="5dp"
@@ -202,7 +183,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="Password"
+                        android:text="@string/passfield"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
