@@ -122,7 +122,7 @@ public void ClickTemperature(View view){
 }
 
 public void ClickTaskManagment(View view){
-    redirectActivity(this,TaskManagementActivity.class);
+    redirectActivity(this,SentOrReceived.class);
 }
 
 public void ClickCalendar(View view){

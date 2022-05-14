@@ -38,6 +38,7 @@ public class AddTask extends AppCompatActivity {
     FirebaseAuth fAuth;
     String userID;
     FirebaseFirestore fStore;
+    DocumentReference documentReference,documentReference2;
 
 
     @Override
@@ -106,34 +107,7 @@ public class AddTask extends AppCompatActivity {
 
     }
 
-    private void processinsert() {
 
-        Map<String,Object> map = new HashMap<>();
-        map.put("title",AddTaskTitle.getText().toString());
-        map.put("description",AddTaskDescription.getText().toString());
-        map.put("time",AddTaskTime.getText().toString());
-        map.put("date",AddTaskDate.getText().toString());
-        map.put("receiver",AddTaskReciever.getText().toString());
-        FirebaseDatabase.getInstance().getReference().child("tasks").push()
-                .setValue(map)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        AddTaskTitle.setText("");
-                        AddTaskDescription.setText("");
-                        AddTaskTime.setText("");
-                        AddTaskDate.setText("");
-                        AddTaskReciever.setText("");
-                        Toast.makeText(getApplicationContext(),"Inserted Successfully",Toast.LENGTH_LONG).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(),"Could not insert",Toast.LENGTH_LONG).show();
-                    }
-                });
-    }
 
     public void SendData(View view) {
         String Title = AddTaskTitle.getText().toString().trim();
@@ -163,8 +137,19 @@ public class AddTask extends AppCompatActivity {
 
 
 
-                userID = fAuth.getCurrentUser().getUid();
-                DocumentReference documentReference = fStore.collection("tasks").document(userID);
+                //userID = fAuth.getCurrentUser().getUid();
+
+        if(Receiver.equals((fAuth.getCurrentUser().getEmail().replace("@visteon.com","")))){
+            AddTaskReciever.setError("Choose another user");
+            return;
+        }else{
+             documentReference = fStore.collection("tasks").document(Receiver)
+                    .collection("Received").document();
+             documentReference2=fStore.collection("tasks").document(fAuth.getCurrentUser().getEmail().replace("@visteon.com",""))
+                     .collection("Sent").document();
+        }
+                //DocumentReference documentReference = fStore.collection("tasks")
+        // .document(userID).collection("sent").document();
                 Map<String, Object> task = new HashMap<>();
 
                  task.put("title", Title);
@@ -182,6 +167,13 @@ public class AddTask extends AppCompatActivity {
                         Log.d(TAG, "C bon!!!!" + userID);
                     }
                 });
+
+        documentReference2.set(task).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "C bon!!!" + userID);
+            }
+        });
 
 
             }

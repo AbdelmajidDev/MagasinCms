@@ -36,6 +36,8 @@ FloatingActionButton fab;
         stitle=findViewById(R.id.stitle);
         sdate=findViewById(R.id.sdate);
         sdesc=findViewById(R.id.sdesc);
+        String work=FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String CurrentCsId=work.replace("@visteon.com","");
         fab=findViewById(R.id.edit_task);
         swipeLayout=findViewById(R.id.swipeLayout);
         fAuth = FirebaseAuth.getInstance();
@@ -53,7 +55,7 @@ FloatingActionButton fab;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(userID.equals(id)) {
+                if(!(CurrentCsId.equals(q))) {
                     BottomSheet bottomSheet = new BottomSheet();
                     Bundle bundle = new Bundle();
                     bundle.putString("date", n);
