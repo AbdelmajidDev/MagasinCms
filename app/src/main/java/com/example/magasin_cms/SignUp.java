@@ -36,7 +36,7 @@ RadioButton male,female;
 RadioGroup rad;
 Button sign;
 String gender;
-String csID;
+String csID,mix;
 String userID;
 FirebaseAuth fAuth;
 FirebaseFirestore fStore;
@@ -63,8 +63,8 @@ FirebaseFirestore fStore;
         female=findViewById(R.id.Female);
         fAuth=FirebaseAuth.getInstance();
         fStore=FirebaseFirestore.getInstance();
-
         dep.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 dep.setText(null);
@@ -87,11 +87,11 @@ FirebaseFirestore fStore;
             @Override
             public void onClick(View view) {
                 String FullName=name.getText().toString().trim();
-                String CurrentShift=shift.getText().toString().trim();
+                String CurrentShift=shift.getText().toString().toLowerCase().trim();
                 String Phone=phone.getText().toString().trim();
                 String Password=pass.getText().toString().trim();
                 String ConfPassword=repass.getText().toString().trim();
-                String Department=dep.getText().toString().trim();
+                String Department=dep.getText().toString().toLowerCase().trim();
                 String Email=mail.getText().toString().trim();
                   if(male.isChecked())
                 {
@@ -188,9 +188,11 @@ FirebaseFirestore fStore;
                         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
+                                mix=(CurrentShift+Department);
                                 FirebaseMessaging.getInstance().subscribeToTopic(csID);
-                                String mix=CurrentShift+Department;
                                 FirebaseMessaging.getInstance().subscribeToTopic(mix);
+                                System.out.println("Subscription : "+mix);
+                                System.out.println("Subscription : "+csID);
                             Log.d(TAG,"C bon!!!!"+userID);
                             }
                         });

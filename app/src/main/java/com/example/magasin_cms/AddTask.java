@@ -218,7 +218,6 @@ public class AddTask extends AppCompatActivity implements SingleChoiceDialogFrag
                     documentReference = fStore.collection("tasks").document(csID)
                             .collection("Received").document();
                         AddTaskShiftReceiver.setText(null);
-                        AddTaskShiftReceiver.setEnabled(false);
                     FcmNotificationsSender notificationsSender=new FcmNotificationsSender("/topics/"+csID,Title,Description
                             ,getApplicationContext(),AddTask.this);
                     notificationsSender.SendNotifications(); }
@@ -226,9 +225,10 @@ public class AddTask extends AppCompatActivity implements SingleChoiceDialogFrag
                     documentReference = fStore.collection(xdep).document();
                             //.document(AddTaskShiftReceiver.getText().toString().trim())
                             //.collection("Received").document();
-                    mix=(AddTaskShiftReceiver+xdep).toString();
+                    mix=(AddTaskShiftReceiver.getText()+xdep);
                     FcmNotificationsSender notificationsSender=new FcmNotificationsSender("/topics/"+mix,Title,Description
                             ,getApplicationContext(),AddTask.this);
+                    System.out.println("send to : "+mix);
                     notificationsSender.SendNotifications();}
 
 

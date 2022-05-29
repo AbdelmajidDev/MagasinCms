@@ -45,7 +45,7 @@ public class AllReceivedTasksActivity extends AppCompatActivity {
     TextView addTask;
     int mHour, mMinute;
     public String xdep;
-    String xShift;
+    String xShift,mix;
     Button AllTasks;
     String n,m,x;
     FirebaseUser work;
@@ -85,15 +85,27 @@ public class AllReceivedTasksActivity extends AppCompatActivity {
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    public void onComplete(@NonNull Task<QuerySnapshot> task ) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 x=document.get("receiver").toString();
                                 //if((mHour==01 && mMinute==22)||(mHour==14 && mMinute==00)||(mHour==22 && mMinute==00))
-                                if((mHour==02 && mMinute==36))
-                                { document.getReference().update("receiver","2");}
-                                if((mHour==22 && mMinute==00)){
+                                if((mHour==15 && mMinute==57))
+
+                                {   mix="2"+n;
+                                    FcmNotificationsSender notificationsSender=new FcmNotificationsSender("/topics/"+mix,"New task","Tap to Open"
+                                        ,getApplicationContext(),AllReceivedTasksActivity.this);
+                                    notificationsSender.SendNotifications();
+                                    System.out.println("time :"+mix);
+                                    document.getReference().update("receiver","2");
+                                }
+                                if((mHour==16 && mMinute==05)){
+                                    mix="3"+n;
+                                    System.out.println("time :"+mix);
+                                    FcmNotificationsSender notificationsSender=new FcmNotificationsSender("/topics/"+mix,"New task","Tap to Open"
+                                            ,getApplicationContext(),AllReceivedTasksActivity.this);
+                                    notificationsSender.SendNotifications();
                                     document.getReference().update("receiver","3");
                                 }
                                 if((mHour==6 && mMinute==00)){firebaseFirestore.collection(n).document(document.getId()).delete();}
