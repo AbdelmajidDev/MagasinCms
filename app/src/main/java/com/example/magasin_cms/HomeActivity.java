@@ -98,7 +98,7 @@ public class HomeActivity extends AppCompatActivity {
         String CurrentId = work.getUid();
         DocumentReference reference;
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        reference = firestore.collection("users").document(CurrentId);
+        reference = firestore.collection("users").document(mAuth.getCurrentUser().getEmail().replace("@visteon.com",""));
         reference.get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -108,11 +108,11 @@ public class HomeActivity extends AppCompatActivity {
                             String Email = task.getResult().getString("Email");
                             String phone = task.getResult().getString("Phone");
                             String gender = task.getResult().getString("Gender");
-                            String position = task.getResult().getString("Position");
+                            String department = task.getResult().getString("Department");
                             mailTextView.setText(Email);
                             phoneTextView.setText(phone);
                             genderTextView.setText(gender);
-                            positionTextView.setText(position);
+                            positionTextView.setText(department );
                             userName.setText(fullName);
                             PID.setText(CurrentId);
                         } else {

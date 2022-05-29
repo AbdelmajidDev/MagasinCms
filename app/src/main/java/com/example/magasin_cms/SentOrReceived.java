@@ -16,7 +16,7 @@ public class SentOrReceived extends AppCompatActivity {
     }
     public void ReceivedTasks(View v){
 
-        redirectActivity(this,TaskManagementActivity.class);
+        redirectActivity(this, ReceivedTasks.class);
     }
 
     public void SentTasks(View v){

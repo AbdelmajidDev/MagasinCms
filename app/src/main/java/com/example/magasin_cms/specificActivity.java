@@ -26,6 +26,7 @@ public class specificActivity extends AppCompatActivity {
 TextView stitle,sdesc,sdate;
     FirebaseAuth fAuth;
     String userID;
+    FirebaseFirestore fStore;
     DocumentReference reference;
     SwipeRefreshLayout swipeLayout;
 FloatingActionButton fab;
@@ -41,6 +42,7 @@ FloatingActionButton fab;
         fab=findViewById(R.id.edit_task);
         swipeLayout=findViewById(R.id.swipeLayout);
         fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
         userID = fAuth.getCurrentUser().getUid();
         Intent j=getIntent();
         String n=j.getStringExtra("a");
@@ -48,28 +50,43 @@ FloatingActionButton fab;
         String p=j.getStringExtra("c");
         String q=j.getStringExtra("d");
        String id=j.getStringExtra("e");
-        stitle.setText(m);
-        sdesc.setText(p);
-        sdate.setText(n);
+        stitle.setText("Task Title : "+m);
+        sdesc.setText("Task Description : "+p);
+        sdate.setText("Task Date : "+n);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!(CurrentCsId.equals(q))) {
-                    BottomSheet bottomSheet = new BottomSheet();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("date", n);
-                    bundle.putString("title", m);
-                    bundle.putString("Description", p);
-                    bundle.putString("Receiver", q);
-                    bundle.putString("id",id);
-                    bottomSheet.setArguments(bundle);
 
-                    bottomSheet.show(getSupportFragmentManager(), "TAG");
-                }else
-                Toast.makeText(getApplicationContext(),"you cannot edit this Task",Toast.LENGTH_SHORT).show();
+                fStore.collection("tasks")
+                        .document(fAuth.getCurrentUser().getEmail().replace("@visteon.com",""))
+                        .collection("Sent").document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.getResult().exists()){
+                            BottomSheet bottomSheet = new BottomSheet();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("date", n);
+                            bundle.putString("title", m);
+                            bundle.putString("Description", p);
+                            bundle.putString("Receiver", q);
+                            bundle.putString("id",id);
+                            bottomSheet.setArguments(bundle);
 
+                            bottomSheet.show(getSupportFragmentManager(), "TAG");
+                        }else{
+                            Toast.makeText(getApplicationContext(),"you cannot edit this Task",Toast.LENGTH_SHORT).show();
+
+
+                        }
+                    }
+                });
             }
+                //if(!(CurrentCsId.equals(q))) {
+
+               // }else
+
+           // }
         });
 
 

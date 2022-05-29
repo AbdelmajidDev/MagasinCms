@@ -121,11 +121,12 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:onClick="ClickAbout">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_logout"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_baseline_contact_support_24" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"

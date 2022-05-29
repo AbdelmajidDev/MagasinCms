@@ -50,7 +50,8 @@ public class BottomSheet extends BottomSheetDialogFragment {
         edittaskDate.setText(n);
         editTaskTitle.setText(m);
         editTaskDescription.setText(p);
-        edittaskreciever.setText(q);
+        edittaskreciever.setText(r);
+
 
         editTask.setOnClickListener(new View.OnClickListener() {
             @Override

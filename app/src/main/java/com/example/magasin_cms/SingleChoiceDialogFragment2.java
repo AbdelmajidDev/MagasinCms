@@ -10,14 +10,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
-public class SingleChoiceDialogFragment extends DialogFragment {
+public class SingleChoiceDialogFragment2 extends DialogFragment {
     int def=0;
 
     public interface SingleChoiceListener{
-        void onPositiveButtonClicked(String[] options,int def);
-        void onNegativeButtonClicked();}
+        void onPositiveButtonClicked2(String[] options,int def);
+        void onNegativeButtonClicked2();}
 
-        SingleChoiceListener mListener;
+    SingleChoiceListener mListener;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -33,24 +33,24 @@ public class SingleChoiceDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
-        String[] options=getActivity().getResources().getStringArray(R.array.Departments);
+        String[] options=getActivity().getResources().getStringArray(R.array.Shifts);
         builder.setTitle("select your choice").setSingleChoiceItems(options, def, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-            def=i;
+                def=i;
             }
         }).setPositiveButton("ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-            mListener.onPositiveButtonClicked(options,def);
+                mListener.onPositiveButtonClicked2(options,def);
             }
         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-            mListener.onNegativeButtonClicked();
+                mListener.onNegativeButtonClicked2();
             }
         });
-       return builder.create();
+        return builder.create();
 
-}
+    }
 }

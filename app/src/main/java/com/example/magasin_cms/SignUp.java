@@ -22,6 +22,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.lang.reflect.Array;
 import java.util.HashMap;
@@ -29,8 +30,8 @@ import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
-public class SignUp extends AppCompatActivity implements SingleChoiceDialogFragment.SingleChoiceListener {
-EditText name,phone,pass,repass,dep;
+public class SignUp extends AppCompatActivity implements SingleChoiceDialogFragment.SingleChoiceListener,SingleChoiceDialogFragment2.SingleChoiceListener {
+EditText name,phone,pass,repass,dep,shift,mail;
 RadioButton male,female;
 RadioGroup rad;
 Button sign;
@@ -52,16 +53,16 @@ FirebaseFirestore fStore;
         rad=findViewById(R.id.rad);
         dep=findViewById(R.id.dep);
         name=findViewById(R.id.Name);
-        //mail=findViewById(R.id.Smail);
+        shift=findViewById(R.id.CurrentShift);
         phone=findViewById(R.id.phone);
         pass=findViewById(R.id.Spsd);
         repass=findViewById(R.id.repsd);
         sign=findViewById(R.id.done);
         male=findViewById(R.id.Male);
+        mail=findViewById(R.id.Email);
         female=findViewById(R.id.Female);
         fAuth=FirebaseAuth.getInstance();
         fStore=FirebaseFirestore.getInstance();
-
 
         dep.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,16 +73,26 @@ FirebaseFirestore fStore;
                 singleChoiceDialog.show(getSupportFragmentManager(),"Single Choice Dialog");
             }
         });
+        shift.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shift.setText(null);
+                DialogFragment singleChoiceDialog2=new SingleChoiceDialogFragment2();
+                singleChoiceDialog2.setCancelable(false);
+                singleChoiceDialog2.show(getSupportFragmentManager(),"Single Choice Dialog");
+            }
+        });
 
         sign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String FullName=name.getText().toString().trim();
-                //String email=mail.getText().toString().trim();
+                String CurrentShift=shift.getText().toString().trim();
                 String Phone=phone.getText().toString().trim();
                 String Password=pass.getText().toString().trim();
                 String ConfPassword=repass.getText().toString().trim();
                 String Department=dep.getText().toString().trim();
+                String Email=mail.getText().toString().trim();
                   if(male.isChecked())
                 {
                     gender="Male";
@@ -96,14 +107,20 @@ FirebaseFirestore fStore;
                 return;
                 }
 
-
-                /*if (email.isEmpty())
+                if (Email.isEmpty())
                 {
-                    mail.setError("E-Mail is Required");
+                    mail.setError("Email is Required");
                     return;
-                }*/
+                }
+                if (!Email.contains("@visteon.com"))
+                {
+                    mail.setError("xxxx@visteon.com");
+                    return;
+                }
+
                 if (Phone.isEmpty())
                 {
+                    //Add anther test(8 digits)
                     phone.setError("Phone Number is Required");
                     return;
                 }
@@ -138,34 +155,42 @@ FirebaseFirestore fStore;
                     return;
                 }
 
-                        int i=FullName.indexOf(" ")+1;
+                        /*int i=FullName.indexOf(" ")+1;
                         int y=i+7;
-                        csID=FullName.substring(0,1)+FullName.substring(i,y);
-                        String mail=csID+"@visteon.com";
+
+                        String mail=(csID+"@visteon.com").toLowerCase();*/
+                csID=(Email.replace("@visteon.com","")).toLowerCase();
 
 
 
-
-                fAuth.createUserWithEmailAndPassword(mail,Password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                fAuth.createUserWithEmailAndPassword(Email,Password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         userID=fAuth.getCurrentUser().getUid();
-                        DocumentReference documentReference=fStore.collection("users").document(userID);
+                        DocumentReference documentReference=fStore.collection("users").document(csID);
                         Map<String,Object> user= new HashMap<>();
                         user.put("csID",csID);
                         user.put("Fname",FullName);
                         user.put("Gender",gender);
-                        user.put("Email",mail);
+                        user.put("Email",Email);
                         user.put("Phone",Phone);
                         user.put("Department",Department);
+                        user.put("Current Shift",CurrentShift);
+                        FirebaseMessaging.getInstance().deleteToken();
+                       /*FirebaseMessaging.getInstance().unsubscribeFromTopic("1");
+                       FirebaseMessaging.getInstance().unsubscribeFromTopic("2");
+                       FirebaseMessaging.getInstance().unsubscribeFromTopic("3");*/
 
+                        //+Department
                         Toast.makeText(getApplicationContext(),"You're good to go!",Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         finish();
 
                         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
+                                FirebaseMessaging.getInstance().subscribeToTopic(csID);
+                                String mix=CurrentShift+Department;
+                                FirebaseMessaging.getInstance().subscribeToTopic(mix);
                             Log.d(TAG,"C bon!!!!"+userID);
                             }
                         });
@@ -187,10 +212,23 @@ FirebaseFirestore fStore;
     @Override
     public void onPositiveButtonClicked(String[] options, int def) {
         dep.setText(options[def]);
+
     }
 
     @Override
     public void onNegativeButtonClicked() {
     return;
     }
+
+
+    public void onPositiveButtonClicked2(String[] options, int def) {
+        shift.setText(options[def]);
+
+    }
+
+
+    public void onNegativeButtonClicked2() {
+        return;
+    }
+
 }

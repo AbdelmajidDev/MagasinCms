@@ -1,12 +1,23 @@
 <resources>
     <string name="app_name">Magasin_Cms</string>
-    <string-array name="positions">
-        <item>one</item>
-        <item>two</item>
-        <item>three</item>
-        <item>four</item>
-        <item>five</item>
+    <string-array name="Departments">
+        <item>Purchase</item>
+        <item>Quality</item>
+        <item>Tpm</item>
+        <item>Logistics</item>
+        <item>Production</item>
+        <item>Method</item>
     </string-array>
+    <string-array name="Shifts">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string name="NotifyAll">Send to one person</string>
+    <string name="doubleoptionCSID">type receiver\'s csID or Email</string>
+    <string name="CurrentShift">CURRENT SHIFT: this field is optional</string>
+    <string name="CurrentShift2">Receiving Shift: this field is optional</string>
+    <string name="ChooseShift">Double tap to choose</string>
     <string name="passfield">Password</string>
     <string name="open">Open</string>
     <string name="close">Close</string>

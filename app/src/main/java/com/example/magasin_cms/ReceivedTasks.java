@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.magasin_cms.Model.TaskModel;
@@ -18,48 +19,77 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.firebase.ui.firestore.ObservableSnapshotArray;
 import com.firebase.ui.firestore.SnapshotParser;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
-public class SentTasks extends AppCompatActivity {
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
+public class ReceivedTasks extends AppCompatActivity {
+
     TextView addTask;
+    int mHour, mMinute;
+String xdep;
+String xShift;
+Button AllTasks;
     FirebaseUser work;
 
-    ObservableSnapshotArray<TaskModel> id;
-    private DocumentReference mDataBase;
-    private FirebaseAuth fAuth;
+    //Firebase
 
     private FirestoreRecyclerAdapter adapter;
 
     //Recycler
-    RecyclerView recyclerView;
+     RecyclerView recyclerView;
     private FirebaseFirestore firebaseFirestore;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sent_tasks);
+        setContentView(R.layout.activity_received_management);
         addTask = findViewById(R.id.addTask);
-        fAuth = FirebaseAuth.getInstance();
         String work=FirebaseAuth.getInstance().getCurrentUser().getEmail();
-
         String CurrentCsId=work.replace("@visteon.com","");
-
         firebaseFirestore=FirebaseFirestore.getInstance();
-
-
         recyclerView = findViewById(R.id.taskRecycler);
+        AllTasks=findViewById(R.id.AllTasks);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         recyclerView.setHasFixedSize(true);
 
-        Query query = FirebaseFirestore.getInstance()
-                .collection("tasks")
-                .document(CurrentCsId).collection("Sent");
+        FirebaseFirestore.getInstance().collection("users")
+                .document(CurrentCsId)
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.getResult().exists()){
+                    xdep = task.getResult().getString("Department");
+                    xShift=task.getResult().getString("Current Shift");
 
+                }
+            }
+        });
+        AllTasks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Intent intent=new Intent(getApplicationContext(),AllReceivedTasksActivity.class);
+                intent.putExtra("xdep",xdep);
+                intent.putExtra("xShift",xShift);
+                startActivity(intent);
+            }
+        });
+
+
+
+        Query query = FirebaseFirestore.getInstance()
+                .collection("tasks").document(CurrentCsId).collection("Received");
 
         FirestoreRecyclerOptions<TaskModel> options = new FirestoreRecyclerOptions.Builder<TaskModel>()
                 .setQuery(query, new SnapshotParser<TaskModel>() {
@@ -74,16 +104,16 @@ public class SentTasks extends AppCompatActivity {
                 })
                 .build();
         //id=options.getSnapshots();
-        adapter= new FirestoreRecyclerAdapter<TaskModel, SentTasks.TaskViewHolder>(options) {
+         adapter= new FirestoreRecyclerAdapter<TaskModel, TaskViewHolder>(options) {
             @NonNull
             @Override
-            public SentTasks.TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_task,parent,false);
-                return new SentTasks.TaskViewHolder(v);
+                return new TaskViewHolder(v);
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull SentTasks.TaskViewHolder holder, int position, @NonNull TaskModel model) {
+            protected void onBindViewHolder(@NonNull TaskViewHolder holder, int position, @NonNull TaskModel model) {
                 holder.task_title.setText(model.getTitle());
                 holder.task_details.setText(model.getDescription());
                 holder.task_receiver.setText(model.getReceiver());
@@ -93,6 +123,7 @@ public class SentTasks extends AppCompatActivity {
                 holder.Task_Card.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
 
                         Intent intent=new Intent(getApplicationContext(),specificActivity.class);
                         intent.putExtra("a",model.getDate());
@@ -106,6 +137,8 @@ public class SentTasks extends AppCompatActivity {
             }
         };
 
+
+
         recyclerView.setAdapter(adapter);
 
         addTask.setOnClickListener(new View.OnClickListener() {
@@ -118,9 +151,13 @@ public class SentTasks extends AppCompatActivity {
 
     }
 
+
+
+
+
     private class TaskViewHolder extends RecyclerView.ViewHolder {
-        TextView task_title , task_details, task_receiver , task_date;
-        CardView Task_Card;
+            TextView task_title , task_details, task_receiver , task_date;
+            CardView Task_Card;
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
             Task_Card=itemView.findViewById(R.id.Task_Card);
@@ -132,14 +169,14 @@ public class SentTasks extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        adapter.stopListening();
-    }
+        @Override
+        protected void onStop() {
+            super.onStop();
+            adapter.stopListening();
+        }
 
-    @Override
-    protected void onStart() {
+        @Override
+        protected void onStart() {
         super.onStart();
         adapter.startListening();
     }

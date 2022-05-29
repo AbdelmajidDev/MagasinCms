@@ -114,7 +114,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="Task time"
+            android:text="Receiver csID"
             tools:ignore="MissingPrefix" />
 
         <EditText
@@ -126,7 +126,8 @@
             android:singleLine="true"
             android:background="@drawable/btn_border"
             android:padding="10dp"
-            android:id="@+id/taskTime"
+            android:hint="@string/doubleoptionCSID"
+            android:id="@+id/taskcsID"
             tools:ignore="MissingPrefix" />
 
         <TextView
@@ -135,7 +136,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="Add a Receiver"
+            android:text="@string/CurrentShift2"
             tools:ignore="MissingPrefix" />
 
         <EditText
@@ -147,9 +148,23 @@
             android:singleLine="true"
             android:background="@drawable/btn_border"
             android:padding="10dp"
-            android:id="@+id/taskReciever"
+            android:hint="@string/ChooseShift"
+            android:id="@+id/taskShiftReciever"
             tools:ignore="MissingPrefix" />
 
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/NCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/NotifyAll"></CheckBox>
+
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

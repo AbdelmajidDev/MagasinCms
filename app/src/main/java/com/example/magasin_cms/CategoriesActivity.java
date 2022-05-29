@@ -12,9 +12,12 @@ import androidx.fragment.app.FragmentManager;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,155 +25,160 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class CategoriesActivity extends AppCompatActivity {
 
+    private long backPressedTime;
+    private Toast backToast;
+    ImageView OpenNotif;
     // FOR DESIGN
-   private Toolbar toolbar;
-   private DrawerLayout drawerLayout;
-   private NavigationView navigationView;
+    private Toolbar toolbar;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
-    //ActionBarDrawerToggle toggle;
+    SharedPreferences sharedPreferences;
 
-
+   // public static final String fileName = "login";
+    //public static final String Username = "username";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
-        drawerLayout=findViewById(R.id.drawer_layout);
-        /*// 6 - Configure all views
-        this.configureToolBar();
-        this.configureDrawerLayout();
-       // this.configureNavigationView();
+        drawerLayout = findViewById(R.id.drawer_layout);
+        OpenNotif=findViewById(R.id.OpenNotif);
 
 
-       /* navigationView.setCheckedItem(R.id.nav_home);
-        navigationView.setCheckedItem(R.id.nav_profile);
-        navigationView.setNavigationItemSelectedListener(this);*/
 
-       /* FragmentManager fragmentManager = getSupportFragmentManager();
-        Home_fragment fragment= new Home_fragment();
-        fragmentManager.beginTransaction().replace(R.id.Frame1,fragment).commit();*/
 
-/*line.setOnClickListener(new View.OnClickListener() {
+
+
+
+
+
+       /* sharedPreferences = getSharedPreferences(fileName, Context.MODE_PRIVATE);
+
+        if (sharedPreferences.contains(Username)) {
+            Toast.makeText(this, "You are welcome", Toast.LENGTH_SHORT).show();
+        }*/
+
+
+
+    }
+
+    public void OpenNotif(View view){
+        redirectActivity(this, NotificationActivity.class);
+
+    }
+
     @Override
-    public void onClick(View view) {
-        ClickMenu(drawerLayout);
-    }
-});*/
-    }
-
-
-
-  /*  @Override
     public void onBackPressed() {
-        // 5 - Handle back click to close menu
-        if (this.drawerLayout.isDrawerOpen(GravityCompat.START)){
-            this.drawerLayout.closeDrawer(GravityCompat.START);
-        }else{
+
+
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            backToast.cancel();
             super.onBackPressed();
+            return;
+        } else {
+             backToast = Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT);
+             backToast.show();
         }
+        backPressedTime = System.currentTimeMillis();
     }
 
-    3 - Configure NavigationView
-    private void configureNavigationView() {
-        this.navigationView= (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
-    }
 
-    2 - Configure Drawer Layout
-    private void configureDrawerLayout() {
-        this.drawerLayout= (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle= new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-    }
-
-     1 - Configure Toolbar
-    private void configureToolBar() {
-        this.toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
-        setSupportActionBar(toolbar);
-    }*/
-
-public void ClickMenu(View view){
+    public void ClickMenu(View view) {
         openDrawer(drawerLayout);
 
-}
+    }
 
     private static void openDrawer(DrawerLayout drawerLayout) {
         drawerLayout.openDrawer(GravityCompat.START);
     }
 
-public void ClickHome(View view){
+    public void ClickHome(View view) {
         recreate();
 
-}
-public void ClickProfile(View view){
-    redirectActivity(this,HomeActivity.class);
+    }
 
-}
-public void ClickRate(View view){
-    redirectActivity(this,RateUsActivity.class);
-}
+    public void ClickProfile(View view) {
+        redirectActivity(this, HomeActivity.class);
 
-public void ClickTemperature(View view){
-    redirectActivity(this,TemperatureActivity.class);
-}
+    }
 
-public void ClickTaskManagment(View view){
-    redirectActivity(this,SentOrReceived.class);
-}
+    public void ClickRate(View view) {
+        redirectActivity(this, RateUsActivity.class);
+    }
 
-public void ClickCalendar(View view){
-    redirectActivity(this,CalendarActivity.class);
-}
-/*public void ClickAbout(View view){
+    public void ClickTemperature(View view) {
+        redirectActivity(this, TemperatureActivity.class);
+    }
 
-    redirectActivity(this,);
-}*/
-public void ClickLogout(View view){
+    public void ClickTaskManagment(View view) {
+        redirectActivity(this, SentOrReceived.class);
+    }
+
+    public void ClickCalendar(View view) {
+        redirectActivity(this, CalendarActivity.class);
+    }
+
+    public void ClickWorkers(View view) {
+        redirectActivity(this, Registred_Workers.class);
+    }
+
+    /*public void ClickAbout(View view){
+
+        redirectActivity(this,);
+    }*/
+    public void ClickLogout(View view) {
 
         Logout(this);
-}
+    }
 
     private static void Logout(Activity activity) {
-AlertDialog.Builder builder=new AlertDialog.Builder(activity);
-builder.setTitle("Logout");
-builder.setMessage("Are you sure you want to logout?");
-builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-    @Override
-    public void onClick(DialogInterface dialogInterface, int i) {
-   activity.finishAffinity();
-   System.exit(0);
-    }
-});
-builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-    @Override
-    public void onClick(DialogInterface dialogInterface, int i) {
-        dialogInterface.dismiss();
-    }
-});
-builder.show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Logout");
+        builder.setMessage("Are you sure you want to logout?");
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                FirebaseAuth.getInstance().signOut();
+                activity.finishAffinity();
+                //System.exit(0);
+            }
+        });
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.show();
     }
 
-    private static void redirectActivity(Activity activity,Class aclass) {
-        Intent intent=new Intent(activity,aclass);
+
+    private static void redirectActivity(Activity activity, Class aclass) {
+        Intent intent = new Intent(activity, aclass);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
 
     }
 
     public void ClickToDo(View view) {
-    redirectActivity(this,ToDo.class);
+        redirectActivity(this, ToDo.class);
     }
+
 
     // 5 - Show fragment according an Identifier
 
 
-    }
+}
 
 

@@ -1,37 +1,6 @@
 package com.example.magasin_cms.bottomSheetFragment;
 
-import android.annotation.SuppressLint;
-import android.app.AlarmManager;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.PendingIntent;
-import android.app.TimePickerDialog;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Build;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-
-import com.example.magasin_cms.R;
-import com.example.magasin_cms.TaskManagementActivity;
-
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
-import static android.content.Context.ALARM_SERVICE;
 
 public class CreateTaskBottomSheetFragment extends BottomSheetDialogFragment {
 
