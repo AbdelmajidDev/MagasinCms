@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
+    android:background="@drawable/grad_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CategoriesActivity">
@@ -23,16 +24,7 @@
                 layout="@layout/main_toolbar"
                 ></include>
 
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="45dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_margin="5dp"
-                android:padding="1dp"
-                android:id="@+id/OpenNotif"
-                android:onClick="OpenNotif"
-                android:src="@drawable/ic_baseline_notifications_active_24" />
+
         </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
@@ -46,52 +38,12 @@
             android:layout_marginBottom="15dp"
             android:textStyle="bold" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/transparent"
-            app:cardCornerRadius="40dp"
-            app:cardElevation="5dp"
-            android:onClick="ClickTemperature">
-
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="130dp"
-                    android:layout_margin="20dp"
-                    android:background="@drawable/grad_bg">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="25dp"
-                        android:layout_marginLeft="140dp"
-                        android:text="Temperature\nHumidity"
-                        android:textColor="@color/black"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
-
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="150dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginRight="249dp"
-                        android:src="@drawable/thermometer" />
-
-
-                </RelativeLayout>
-
-
-        </androidx.cardview.widget.CardView>
-
 
         <androidx.cardview.widget.CardView
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/transparent"
+            app:cardBackgroundColor="@color/black"
             app:cardCornerRadius="40sp"
             app:cardMaxElevation="20sp"
             app:cardElevation="5dp"

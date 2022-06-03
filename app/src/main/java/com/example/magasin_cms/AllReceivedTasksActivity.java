@@ -91,7 +91,7 @@ public class AllReceivedTasksActivity extends AppCompatActivity {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 x=document.get("receiver").toString();
                                 //if((mHour==01 && mMinute==22)||(mHour==14 && mMinute==00)||(mHour==22 && mMinute==00))
-                                if((mHour==15 && mMinute==57))
+                                if((mHour==14 && mMinute==34))
 
                                 {   mix="2"+n;
                                     FcmNotificationsSender notificationsSender=new FcmNotificationsSender("/topics/"+mix,"New task","Tap to Open"
@@ -184,7 +184,7 @@ public class AllReceivedTasksActivity extends AppCompatActivity {
     }
 
 
-
+ 
 
 
 

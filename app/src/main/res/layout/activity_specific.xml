@@ -63,5 +63,22 @@
 
     </LinearLayout>
 
+        <LinearLayout
+            android:layout_marginTop="350dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonComplet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_bg"
+                android:text="Completed!"
+                android:textColor="#B115FF"
+                android:textSize="20sp"
+                android:layout_marginLeft="150dp"/>
+
+        </LinearLayout>
     </LinearLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

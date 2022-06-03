@@ -2,13 +2,14 @@ package com.example.magasin_cms.Model;
 
 public class UserModel {
 
-    String Fname , Email , Department;
+    String Fname , Email , Department,Phone;
 
     public UserModel() {
     }
 
-    public UserModel(String fname, String email, String department) {
+    public UserModel(String fname, String email, String department,String phone) {
         Fname = fname;
+        Phone=phone;
         Email = email;
         Department = department;
     }
@@ -35,5 +36,13 @@ public class UserModel {
 
     public void setDepartment(String department) {
         Department = department;
+    }
+
+    public String getPhone() {
+        return Phone;
+    }
+
+    public void setPhone(String phone) {
+        Phone = phone;
     }
 }

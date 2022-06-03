@@ -5,10 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Transaction;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.SurfaceControl;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,11 +23,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import static com.example.magasin_cms.AddNewTodoTask.TAG;
 
 public class specificActivity extends AppCompatActivity {
 TextView stitle,sdesc,sdate;
+Button ButtonComplete;
     FirebaseAuth fAuth;
     String userID;
     FirebaseFirestore fStore;
@@ -37,6 +44,7 @@ FloatingActionButton fab;
         stitle=findViewById(R.id.stitle);
         sdate=findViewById(R.id.sdate);
         sdesc=findViewById(R.id.sdesc);
+        ButtonComplete=findViewById(R.id.buttonComplet);
         String work=FirebaseAuth.getInstance().getCurrentUser().getEmail();
         String CurrentCsId=work.replace("@visteon.com","");
         fab=findViewById(R.id.edit_task);
@@ -49,6 +57,7 @@ FloatingActionButton fab;
         String m=j.getStringExtra("b");
         String p=j.getStringExtra("c");
         String q=j.getStringExtra("d");
+        String t=j.getStringExtra("f");
        String id=j.getStringExtra("e");
         stitle.setText("Task Title : "+m);
         sdesc.setText("Task Description : "+p);
@@ -89,7 +98,51 @@ FloatingActionButton fab;
            // }
         });
 
+        ButtonComplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!(fAuth.getCurrentUser().getEmail().replace("@visteon.com", "").trim().equals(t))) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(specificActivity.this);
+                    builder.setTitle("Task completed");
+                    builder.setMessage(t);
+                    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            fStore.collection("tasks").document(t)
+                                    .collection("Sent").whereEqualTo("title", m).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                            Log.d(TAG, document.getId() + " => " + document.getData());
+                                            fStore.collection("tasks").document(CurrentCsId)
+                                                    .collection("Received").document(id).delete();
+                                            fStore.collection("tasks")
+                                                    .document(document.get("Assigned_by").toString()).collection("Sent")
+                                                    .document(document.getId()).update("status", "completed");
+
+                                        }
+                                    }
+                                    //ystem.exit(0);
+                                }
+                            });
+                        }
+                    });
+                    builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    builder.show();
 
 
-    }
+                }else {  Toast.makeText(getApplicationContext(),"You cannot perform this action",Toast.LENGTH_SHORT).show();}
+            }
+        });
 }
+    }
+

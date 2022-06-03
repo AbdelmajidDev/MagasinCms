@@ -3,6 +3,7 @@ package com.example.magasin_cms;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.magasin_cms.Adapter.ToDoAdapter;
 import com.example.magasin_cms.Model.TaskModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -112,6 +114,7 @@ Button AllTasks;
                 return new TaskViewHolder(v);
             }
 
+
             @Override
             protected void onBindViewHolder(@NonNull TaskViewHolder holder, int position, @NonNull TaskModel model) {
                 holder.task_title.setText(model.getTitle());
@@ -124,13 +127,13 @@ Button AllTasks;
                     @Override
                     public void onClick(View view) {
 
-
                         Intent intent=new Intent(getApplicationContext(),specificActivity.class);
                         intent.putExtra("a",model.getDate());
                         intent.putExtra("b",model.getTitle());
                         intent.putExtra("c",model.getDescription());
                         intent.putExtra("d",model.getReceiver());
                         intent.putExtra("e",model.getItem_id());
+                        intent.putExtra("f",model.getAssigned_by());
                         startActivity(intent);
                     }
                 });
@@ -165,7 +168,6 @@ Button AllTasks;
             task_details = itemView.findViewById(R.id.details);
             task_receiver = itemView.findViewById(R.id.status);
             task_date = itemView.findViewById(R.id.date);
-
         }
     }
 

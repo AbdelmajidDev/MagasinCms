@@ -19,7 +19,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="130dp"
             android:layout_weight="1"
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
@@ -32,9 +32,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:alpha="0.5"
-
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="20sp" />
 
 
 
@@ -43,8 +42,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/month"
                 android:layout_gravity="center"
-
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textColor="@color/lightWhite"
                 android:alpha="0.5"/>
 
@@ -73,18 +71,12 @@
                     android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-
                     android:textSize="20sp"
                     android:layout_weight="1"
-                    android:textColor="@color/colorAccent"/>
+                    android:textColor="@color/white"/>
 
 
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:id="@+id/options"
-                    android:background="@drawable/more"/>
 
             </LinearLayout>
 
@@ -93,7 +85,6 @@
                 android:id="@+id/details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:textColor="@color/lightWhite"
                 android:textSize="15sp" />
 
@@ -103,16 +94,15 @@
 
                 android:id="@+id/time"
                 android:textSize="12sp"
-                android:textColor="@android:color/black"/>
+                android:textColor="@color/lightWhite"/>
 
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-
-                android:textSize="12sp"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
                 android:id="@+id/status"
                 android:layout_gravity="right"
                 android:layout_marginTop="10dp"

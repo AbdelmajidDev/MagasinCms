@@ -210,7 +210,8 @@ public class AddTask extends AppCompatActivity implements SingleChoiceDialogFrag
                  task.put("date", Date);
                  task.put("csID", csID);
                  task.put("receiver", ReceivingShift);
-
+                 task.put("status","uncompleted");
+                 task.put("Assigned_by",(fAuth.getCurrentUser().getEmail().replace("@visteon.com","")).toLowerCase());
 
 
         //String Topic=ReceivingShift+xdep;

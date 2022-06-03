@@ -62,7 +62,6 @@ public class Password_Reset extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 resetPassword();
-                finish();
             }
         });
 
@@ -78,13 +77,11 @@ public class Password_Reset extends AppCompatActivity {
         String email = emailEditText.getText().toString().trim();
         if (email.isEmpty()){
             emailEditText.setError("Email is required!");
-            emailEditText.requestFocus();
             return;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             emailEditText.setError("Please provide a valid Email!");
-            emailEditText.requestFocus();
             return;
         }
 

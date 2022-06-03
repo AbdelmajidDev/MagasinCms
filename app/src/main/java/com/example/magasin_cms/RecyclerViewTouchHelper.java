@@ -11,12 +11,14 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.magasin_cms.Adapter.ToDoAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class RecyclerViewTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     private ToDoAdapter adapter;
+
 
     public RecyclerViewTouchHelper(ToDoAdapter adapter) {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);

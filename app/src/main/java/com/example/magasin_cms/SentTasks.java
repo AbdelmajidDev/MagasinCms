@@ -3,15 +3,25 @@ package com.example.magasin_cms;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.magasin_cms.Model.TaskModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -26,14 +36,16 @@ import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
+
 public class SentTasks extends AppCompatActivity {
     TextView addTask;
-    FirebaseUser work;
+
 
     ObservableSnapshotArray<TaskModel> id;
     private DocumentReference mDataBase;
     private FirebaseAuth fAuth;
-
+    String work,CurrentCsId;
     private FirestoreRecyclerAdapter adapter;
 
     //Recycler
@@ -45,9 +57,9 @@ public class SentTasks extends AppCompatActivity {
         setContentView(R.layout.activity_sent_tasks);
         addTask = findViewById(R.id.addTask);
         fAuth = FirebaseAuth.getInstance();
-        String work=FirebaseAuth.getInstance().getCurrentUser().getEmail();
+         work=FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
-        String CurrentCsId=work.replace("@visteon.com","");
+         CurrentCsId=work.replace("@visteon.com","");
 
         firebaseFirestore=FirebaseFirestore.getInstance();
 
@@ -73,7 +85,6 @@ public class SentTasks extends AppCompatActivity {
                     }
                 })
                 .build();
-        //id=options.getSnapshots();
         adapter= new FirestoreRecyclerAdapter<TaskModel, SentTasks.TaskViewHolder>(options) {
             @NonNull
             @Override
@@ -88,12 +99,10 @@ public class SentTasks extends AppCompatActivity {
                 holder.task_details.setText(model.getDescription());
                 holder.task_receiver.setText(model.getReceiver());
                 holder.task_date.setText(model.getDate());
-
-
+                holder.task_status.setText((model.getStatus()));
                 holder.Task_Card.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
                         Intent intent=new Intent(getApplicationContext(),specificActivity.class);
                         intent.putExtra("a",model.getDate());
                         intent.putExtra("b",model.getTitle());
@@ -103,8 +112,35 @@ public class SentTasks extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
+
+                holder.Task_Card.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(SentTasks.this);
+                        builder.setTitle("Logout");
+                        builder.setMessage("Are you sure you want to delete this task?");
+                        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                firebaseFirestore.collection("tasks").document(CurrentCsId)
+                                        .collection("Sent").document(model.getItem_id()).delete();
+
+                                //System.exit(0);
+                            }
+                        });
+                        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        });
+                        builder.show();
+                        return false;
+                    }
+                });
             }
         };
+
 
         recyclerView.setAdapter(adapter);
 
@@ -119,7 +155,7 @@ public class SentTasks extends AppCompatActivity {
     }
 
     private class TaskViewHolder extends RecyclerView.ViewHolder {
-        TextView task_title , task_details, task_receiver , task_date;
+        TextView task_title , task_details, task_receiver , task_date,task_status;
         CardView Task_Card;
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -128,7 +164,7 @@ public class SentTasks extends AppCompatActivity {
             task_details = itemView.findViewById(R.id.details);
             task_receiver = itemView.findViewById(R.id.status);
             task_date = itemView.findViewById(R.id.date);
-
+            task_status=itemView.findViewById(R.id.status);
         }
     }
 
@@ -143,6 +179,30 @@ public class SentTasks extends AppCompatActivity {
         super.onStart();
         adapter.startListening();
     }
+    /*ItemTouchHelper.SimpleCallback ItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP) {
+
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            Toast.makeText(SentTasks.this, "on Move", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+            Toast.makeText(SentTasks.this, "on Swiped ", Toast.LENGTH_SHORT).show();
+            //Remove swiped item from list and notify the RecyclerView
+            //int position = viewHolder.getAdapterPosition();
+            Toast.makeText(SentTasks.this, "wanna delete", Toast.LENGTH_LONG).show();
+            adapter.notifyDataSetChanged();
+
+        }
+    };*/
+
+    public void Delete(String position){
+     firebaseFirestore.collection("users").document(CurrentCsId).collection("Sent").document(position).delete();
+
+    }
+
 
 
 }

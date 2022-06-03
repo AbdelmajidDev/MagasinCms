@@ -53,7 +53,6 @@ public class CategoriesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
         drawerLayout = findViewById(R.id.drawer_layout);
-        OpenNotif=findViewById(R.id.OpenNotif);
 
 
 
@@ -73,10 +72,6 @@ public class CategoriesActivity extends AppCompatActivity {
 
     }
 
-    public void OpenNotif(View view){
-        redirectActivity(this, NotificationActivity.class);
-
-    }
 
     @Override
     public void onBackPressed() {
