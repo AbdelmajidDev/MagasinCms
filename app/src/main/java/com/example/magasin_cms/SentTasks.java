@@ -97,8 +97,7 @@ public class SentTasks extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull SentTasks.TaskViewHolder holder, int position, @NonNull TaskModel model) {
                 holder.task_title.setText(model.getTitle());
                 holder.task_details.setText(model.getDescription());
-                holder.task_receiver.setText(model.getReceiver());
-                holder.task_date.setText(model.getDate());
+                holder.task_ReceiverCs.setText(model.getCsID());
                 holder.task_status.setText((model.getStatus()));
                 holder.Task_Card.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -107,7 +106,7 @@ public class SentTasks extends AppCompatActivity {
                         intent.putExtra("a",model.getDate());
                         intent.putExtra("b",model.getTitle());
                         intent.putExtra("c",model.getDescription());
-                        intent.putExtra("d",model.getReceiver());
+                        intent.putExtra("d",model.getCsID());
                         intent.putExtra("e",model.getItem_id());
                         startActivity(intent);
                     }
@@ -155,15 +154,14 @@ public class SentTasks extends AppCompatActivity {
     }
 
     private class TaskViewHolder extends RecyclerView.ViewHolder {
-        TextView task_title , task_details, task_receiver , task_date,task_status;
+        TextView task_title , task_details, task_receiver , task_ReceiverCs,task_status;
         CardView Task_Card;
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
             Task_Card=itemView.findViewById(R.id.Task_Card);
             task_title = itemView.findViewById(R.id.title);
             task_details = itemView.findViewById(R.id.details);
-            task_receiver = itemView.findViewById(R.id.status);
-            task_date = itemView.findViewById(R.id.date);
+            task_ReceiverCs = itemView.findViewById(R.id.ReceiverCs);
             task_status=itemView.findViewById(R.id.status);
         }
     }

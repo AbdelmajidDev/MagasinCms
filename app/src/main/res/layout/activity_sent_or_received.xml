@@ -5,15 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".SentOrReceived">
+    tools:context=".SentOrReceived"
+    android:background="@drawable/grad_bg">
 
     <androidx.cardview.widget.CardView
         android:layout_marginTop="125dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/transparent"
-        app:cardCornerRadius="40dp"
+        app:cardBackgroundColor="#302C21"
+        app:cardCornerRadius="40sp"
         app:cardElevation="5dp"
+        app:cardMaxElevation="20sp"
         android:onClick="SentTasks">
 
 
@@ -22,7 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="130dp"
             android:layout_margin="20dp"
-            android:background="@drawable/grad_bg">
+            android:background="@drawable/card_views_colors">
+
 
             <TextView
                 android:layout_centerInParent="true"
@@ -31,7 +34,7 @@
                 android:padding="25dp"
                 android:layout_marginLeft="140dp"
                 android:text="Sent Tasks"
-                android:textColor="@color/black"
+                android:textColor="#FBF2B6"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -46,7 +49,7 @@
         android:layout_marginTop="62.5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/transparent"
+        app:cardBackgroundColor="#302C21"
         app:cardCornerRadius="40dp"
         app:cardElevation="5dp"
         android:onClick="ReceivedTasks">
@@ -57,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="130dp"
             android:layout_margin="20dp"
-            android:background="@drawable/grad_bg">
+            android:background="@drawable/card_views_colors">
 
             <TextView
                 android:layout_centerInParent="true"
@@ -66,7 +69,7 @@
                 android:padding="25dp"
                 android:layout_marginLeft="140dp"
                 android:text="Received Tasks"
-                android:textColor="@color/black"
+                android:textColor="#FBF2B6"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 

@@ -281,6 +281,16 @@
                         android:textColor="@color/white"
                         android:textSize="15sp" />
 
+                    <CheckBox
+                        android:id="@+id/TempId"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="30dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Recevoir des notification de Temperature et humidite">
+
+                    </CheckBox>
+
                 </LinearLayout>
 
 

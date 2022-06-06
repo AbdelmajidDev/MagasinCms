@@ -9,13 +9,13 @@ public class TaskModel {
     private String receiver;
     private String status;
     private String Assigned_by;
-
+    private String csID;
 
     public TaskModel(){
 
     }
 
-    public TaskModel(String title, String description, String date, String time, String receiver,String item_id,String status,String Assigned_by) {
+    public TaskModel(String title, String description, String date, String time, String receiver,String item_id,String status,String Assigned_by,String csID) {
         this.title = title;
         this.description = description;
         this.date = date;
@@ -24,6 +24,7 @@ public class TaskModel {
         this.item_id=item_id;
         this.status=status;
         this.Assigned_by=Assigned_by;
+        this.csID=csID;
     }
 
     public String getTitle() {
@@ -88,5 +89,13 @@ public class TaskModel {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getCsID() {
+        return csID;
+    }
+
+    public void setCsID(String csID) {
+        this.csID = csID;
     }
 }

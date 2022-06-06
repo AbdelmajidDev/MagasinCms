@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -40,7 +41,7 @@ String csID,mix;
 String userID;
 FirebaseAuth fAuth;
 FirebaseFirestore fStore;
-
+    CheckBox TempId;
 
 
 
@@ -49,7 +50,7 @@ FirebaseFirestore fStore;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-
+        TempId=findViewById(R.id.TempId);
         rad=findViewById(R.id.rad);
         dep=findViewById(R.id.dep);
         name=findViewById(R.id.Name);
@@ -188,12 +189,15 @@ FirebaseFirestore fStore;
                         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                mix=(CurrentShift+Department);
-                                FirebaseMessaging.getInstance().subscribeToTopic(csID);
-                                FirebaseMessaging.getInstance().subscribeToTopic(mix);
-                                System.out.println("Subscription : "+mix);
-                                System.out.println("Subscription : "+csID);
-                            Log.d(TAG,"C bon!!!!"+userID);
+                                if(TempId.isChecked()) {
+                                    mix = (CurrentShift + Department);
+                                    FirebaseMessaging.getInstance().subscribeToTopic(csID);
+                                    FirebaseMessaging.getInstance().subscribeToTopic(mix);
+                                    FirebaseMessaging.getInstance().subscribeToTopic("Temp");
+                                    System.out.println("Subscription : " + mix);
+                                    System.out.println("Subscription : " + csID);
+                                    Log.d(TAG, "C bon!!!!" + userID);
+                                }
                             }
                         });
 

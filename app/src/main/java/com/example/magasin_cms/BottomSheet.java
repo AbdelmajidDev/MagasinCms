@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +19,19 @@ import androidx.paging.PagingSource;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import static com.example.magasin_cms.AddNewTodoTask.TAG;
 
 public class BottomSheet extends BottomSheetDialogFragment {
     FirebaseFirestore fStore;
     Activity specificActivity;
     Context context;
+    FirebaseAuth fAuth;
     public BottomSheet() {
 
     }
@@ -38,7 +45,7 @@ public class BottomSheet extends BottomSheetDialogFragment {
         editTaskTitle=view.findViewById(R.id.editTaskTitle);
         editTaskDescription=view.findViewById(R.id.editTaskDescription);
         edittaskDate=view.findViewById(R.id.edittaskDate);
-        edittaskreciever=view.findViewById(R.id.edittaskReciever);
+        fAuth = FirebaseAuth.getInstance();
         editTask=view.findViewById(R.id.editTask);
         edit_back_button=view.findViewById(R.id.edit_back_button);
         Bundle bundle=getArguments();
@@ -50,19 +57,41 @@ public class BottomSheet extends BottomSheetDialogFragment {
         edittaskDate.setText(n);
         editTaskTitle.setText(m);
         editTaskDescription.setText(p);
-        edittaskreciever.setText(r);
 
 
         editTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fStore = FirebaseFirestore.getInstance();
-                DocumentReference documentReference = fStore.collection("tasks").document(r);
+                DocumentReference documentReference = fStore.collection("tasks")
+                        .document(fAuth.getCurrentUser().getEmail().replace("@visteon.com",""))
+                        .collection("Sent").document(r);
+
                 documentReference.update("title",editTaskTitle.getText().toString(),"date",edittaskDate.getText().toString()
-                        ,"description",editTaskDescription.getText().toString(),"receiver",edittaskreciever.getText().toString());
+                        ,"description",editTaskDescription.getText().toString());
+
+                fStore.collection("tasks").document(q.trim())
+                        .collection("Received").whereEqualTo("description",p).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d(TAG, document.getId() + " => " + document.getData());
+                                        //x=document.get("receiver").toString();
+                                        System.out.println(document.getId());
+                                        DocumentReference documentReference3 = fStore.collection("tasks").document(q)
+                                                .collection("Received").document(document.getId());
+                                        documentReference3.update("title", editTaskTitle.getText().toString(), "date", edittaskDate.getText().toString()
+                                                , "description", editTaskDescription.getText().toString());
+                                    }
+                                }
+                            }
+                        });
+
                 dismiss();
 
             }
+
         });
         edit_back_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,4 +101,5 @@ public class BottomSheet extends BottomSheetDialogFragment {
         });
         return view;
     }
+
 }

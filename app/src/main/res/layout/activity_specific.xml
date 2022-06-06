@@ -27,17 +27,18 @@
         <TextView
             android:layout_marginLeft="40dp"
             android:layout_marginTop="50dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="18dp"
             android:id="@+id/stitle"
-            android:textSize="25sp"
-            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textColor="#302C21"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"></TextView>
 
         <TextView
-            android:textColor="@color/black"
+            android:textColor="#302C21"
+            android:text="dsfsdf"
             android:layout_marginLeft="50dp"
-            android:textSize="18sp"
+            android:textSize="22sp"
             android:id="@+id/sdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"></TextView>
@@ -57,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="30dp"
-            android:textColor="@color/black"
+            android:textColor="#302C21"
             android:textSize="18sp"></TextView>
 
 
@@ -73,11 +74,12 @@
                 android:id="@+id/buttonComplet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/btn_bg"
-                android:text="Completed!"
-                android:textColor="#B115FF"
+                android:padding="20dp"
+                android:background="@drawable/btn_background"
+                android:text="Completed"
+                android:textColor="#FBF2B6"
                 android:textSize="20sp"
-                android:layout_marginLeft="150dp"/>
+                android:layout_marginLeft="130dp"/>
 
         </LinearLayout>
     </LinearLayout>

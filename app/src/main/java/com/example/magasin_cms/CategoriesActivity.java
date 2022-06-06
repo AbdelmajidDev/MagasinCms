@@ -121,7 +121,7 @@ public class CategoriesActivity extends AppCompatActivity {
     }
 
     public void ClickCalendar(View view) {
-        redirectActivity(this, CalendarActivity.class);
+        redirectActivity(this, DiscussionActivity.class);
     }
 
     public void ClickWorkers(View view) {
@@ -170,7 +170,9 @@ public class CategoriesActivity extends AppCompatActivity {
         redirectActivity(this, ToDo.class);
     }
 
-
+    public void ClickTemp(View view) {
+        redirectActivity(this, TemperatureActivity.class);
+    }
     // 5 - Show fragment according an Identifier
 
 

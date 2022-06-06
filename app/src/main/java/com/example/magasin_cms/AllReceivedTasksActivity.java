@@ -148,7 +148,7 @@ public class AllReceivedTasksActivity extends AppCompatActivity {
                 holder.task_title.setText(model.getTitle());
                 holder.task_details.setText(model.getDescription());
                 holder.task_receiver.setText(model.getReceiver());
-                holder.task_date.setText(model.getDate());
+                holder.task_ReceiverCs.setText(model.getReceiver());
 
 
 
@@ -189,7 +189,7 @@ public class AllReceivedTasksActivity extends AppCompatActivity {
 
 
     private class TaskViewHolder extends RecyclerView.ViewHolder {
-        TextView task_title , task_details, task_receiver , task_date;
+        TextView task_title , task_details, task_receiver , task_ReceiverCs;
         CardView Task_Card;
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -197,7 +197,7 @@ public class AllReceivedTasksActivity extends AppCompatActivity {
             task_title = itemView.findViewById(R.id.title);
             task_details = itemView.findViewById(R.id.details);
             task_receiver = itemView.findViewById(R.id.status);
-            task_date = itemView.findViewById(R.id.date);
+            task_ReceiverCs = itemView.findViewById(R.id.ReceiverCs);
 
         }
     }

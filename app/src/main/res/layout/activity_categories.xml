@@ -31,19 +31,54 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Dashboard"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="#302C21"
             android:textAllCaps="true"
             android:textSize="30sp"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="5dp"
             android:textStyle="bold" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#302C21"
+            app:cardCornerRadius="40sp"
+            app:cardMaxElevation="20sp"
+            app:cardElevation="5dp"
+            android:onClick="ClickTemp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/card_views_colors">
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:padding="25dp"
+                    android:layout_marginRight="50dp"
+                    android:text="Temperature and Humidity"
+                    android:textColor="#FBF2B6"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
 
 
         <androidx.cardview.widget.CardView
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/black"
+            app:cardBackgroundColor="#302C21"
+            android:background="@drawable/card_views_colors"
             app:cardCornerRadius="40sp"
             app:cardMaxElevation="20sp"
             app:cardElevation="5dp"
@@ -53,7 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
                 android:layout_margin="20dp"
-                android:background="@drawable/grad_bg">
+                android:background="#302C21">
 
                 <ImageView
                     android:layout_width="100dp"
@@ -67,7 +102,7 @@
                     android:layout_alignParentRight="true"
                     android:padding="25dp"
                     android:text="Task Management"
-                    android:textColor="@color/black"
+                    android:textColor="#FBF2B6"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -80,7 +115,7 @@
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/transparent"
+            app:cardBackgroundColor="#302C21"
             app:cardCornerRadius="40sp"
             app:cardMaxElevation="20sp"
             app:cardElevation="5dp"
@@ -90,7 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
                 android:layout_margin="20dp"
-                android:background="@drawable/grad_bg">
+                android:background="@drawable/card_views_colors">
 
                 <ImageView
                     android:layout_width="100dp"
@@ -105,7 +140,7 @@
                     android:padding="25dp"
                     android:layout_marginRight="50dp"
                     android:text="To-Do-List"
-                    android:textColor="@color/black"
+                    android:textColor="#FBF2B6"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
