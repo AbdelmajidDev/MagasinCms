@@ -79,7 +79,7 @@ public class DiscussionActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(getApplicationContext(), ChatActivity.class);
                 i.putExtra("selected_topic", ((TextView)view).getText().toString());
-                i.putExtra("user_name", "oussama");
+                i.putExtra("user_name", UserName);
                 startActivity(i);
             }
         });
@@ -88,18 +88,22 @@ public class DiscussionActivity extends AppCompatActivity {
     private void getUserName(){
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final EditText userName = new EditText(this);
-
+        builder.setMessage("what do you want to be called during this discussion?");
         builder.setView(userName);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                UserName = userName.getText().toString();
+
+                if(userName.getText().equals("")){
+                    userName.setError("Username is required");
+                    return;
+                }else{ UserName = userName.getText().toString();}
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                getUserName();
+                finish();
             }
         });
         builder.show();

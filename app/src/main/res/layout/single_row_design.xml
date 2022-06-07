@@ -3,11 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="10dp"
-    android:elevation="8dp"
+    app:cardCornerRadius="40sp"
+    app:cardMaxElevation="20sp"
+    app:cardElevation="5dp"
     app:cardUseCompatPadding="true">
     
     <RelativeLayout
+        android:background="@drawable/grad_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp">
@@ -23,7 +25,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/Fname_text"
             android:textStyle="bold"
-            android:textSize="25sp"
+            android:textSize="15sp"
             android:textColor="#000"
             android:layout_toRightOf="@id/img1"
             android:layout_marginLeft="10dp"/>
@@ -32,8 +34,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/Department_text"
-            android:textStyle="bold"
-            android:textSize="20sp"
+            android:textStyle="italic"
+            android:textSize="15sp"
             android:textColor="#000"
             android:layout_toRightOf="@id/img1"
             android:layout_below="@id/Email_text"
@@ -43,8 +45,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/Email_text"
-            android:textStyle="bold"
-            android:textSize="20sp"
+            android:textStyle="italic"
+            android:textSize="15sp"
             android:textColor="#000"
             android:layout_toRightOf="@id/img1"
             android:layout_below="@id/Fname_text"

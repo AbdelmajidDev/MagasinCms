@@ -59,6 +59,7 @@ FloatingActionButton fab;
         String q=j.getStringExtra("d");
         String t=j.getStringExtra("f");
        String id=j.getStringExtra("e");
+       String PreviousAct=j.getStringExtra("PreviousAct");
         stitle.setText("Task Title : "+m);
         sdesc.setText("Task Description : "+p);
         sdate.setText("Task Date : "+n);
@@ -101,7 +102,7 @@ FloatingActionButton fab;
         ButtonComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!(fAuth.getCurrentUser().getEmail().replace("@visteon.com", "").trim().equals(t))) {
+                if (PreviousAct.equals("ReceivedTasks")) {
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(specificActivity.this);
                     builder.setTitle("Task completed");
@@ -126,7 +127,7 @@ FloatingActionButton fab;
 
                                         }
                                     }
-                                    //ystem.exit(0);
+
                                 }
                             });
                         }

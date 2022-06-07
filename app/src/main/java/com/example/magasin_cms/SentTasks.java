@@ -108,6 +108,7 @@ public class SentTasks extends AppCompatActivity {
                         intent.putExtra("c",model.getDescription());
                         intent.putExtra("d",model.getCsID());
                         intent.putExtra("e",model.getItem_id());
+                        intent.putExtra("PreviousAct","SentTasks");
                         startActivity(intent);
                     }
                 });

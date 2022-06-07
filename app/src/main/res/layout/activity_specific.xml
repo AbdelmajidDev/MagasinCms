@@ -29,14 +29,14 @@
             android:layout_marginTop="50dp"
             android:layout_marginBottom="18dp"
             android:id="@+id/stitle"
-            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textSize="23sp"
             android:textColor="#302C21"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"></TextView>
 
         <TextView
             android:textColor="#302C21"
-            android:text="dsfsdf"
             android:layout_marginLeft="50dp"
             android:textSize="22sp"
             android:id="@+id/sdate"

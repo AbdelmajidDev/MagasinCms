@@ -64,7 +64,7 @@ public class RecyclerViewTouchHelper extends ItemTouchHelper.SimpleCallback {
         new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                 .addSwipeLeftBackgroundColor(ContextCompat.getColor(adapter.getContext(),R.color.color_two))
                 .addSwipeLeftActionIcon(R.drawable.ic_edit)
-                .addSwipeRightBackgroundColor(Color.RED)
+                .addSwipeRightBackgroundColor(R.color.mixedColor)
                 .addSwipeRightActionIcon(R.drawable.ic_delete)
                 .create()
                 .decorate();

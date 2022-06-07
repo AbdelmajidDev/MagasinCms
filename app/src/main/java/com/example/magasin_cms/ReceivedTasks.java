@@ -134,6 +134,7 @@ Button AllTasks;
                         intent.putExtra("d",model.getReceiver());
                         intent.putExtra("e",model.getItem_id());
                         intent.putExtra("f",model.getAssigned_by());
+                        intent.putExtra("PreviousAct","ReceivedTasks");
                         startActivity(intent);
                     }
                 });

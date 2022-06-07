@@ -42,14 +42,17 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         final ToDoModel item = mList.get(position);
         holder.mCkeckBox.setText(item.getTask());
-        holder.mCkeckBox.setChecked(toBoolean(item.getStatus()));
+        //holder.mCkeckBox.setText(item.getStatus());
         holder.mCkeckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked){
                     myDB.updateStatus(item.getId(),1);
+
+
                 }else {
                     myDB.updateStatus(item.getId(),0);
+                    item.setStatus(0);
                 }
             }
         });

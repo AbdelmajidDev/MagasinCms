@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ToDo">
+    tools:context=".ToDo"
+    android:background="@drawable/grad_bg">
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textview"
-        android:text="To Do Tasks"
+        android:text="To Do List"
         android:textSize="32sp"
-        android:textColor="@color/black"
+        android:textColor="#302C21"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"/>
