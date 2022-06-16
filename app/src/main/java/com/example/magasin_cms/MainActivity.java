@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(k);
                             mDialog.show();
                         }else {
-                            Toast.makeText(getApplicationContext(),"Problem occured!",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"You have entered an invalid username or password",Toast.LENGTH_SHORT).show();
                             mDialog.dismiss();
                         }
                     }

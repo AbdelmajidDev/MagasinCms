@@ -148,9 +148,9 @@ public class AddTask extends AppCompatActivity implements SingleChoiceDialogFrag
 
         AddNewTask.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { SendData(view);
-
-
+            public void onClick(View view) {
+                SendData(view);
+                finishAffinity();
             }
         });
 
@@ -221,7 +221,8 @@ public class AddTask extends AppCompatActivity implements SingleChoiceDialogFrag
                         AddTaskShiftReceiver.setText(null);
                     FcmNotificationsSender notificationsSender=new FcmNotificationsSender("/topics/"+csID,Title,Description
                             ,getApplicationContext(),AddTask.this);
-                    notificationsSender.SendNotifications(); }
+                    notificationsSender.SendNotifications();
+                System.out.println(csID);}
                 else{
                     documentReference = fStore.collection(xdep).document();
                             //.document(AddTaskShiftReceiver.getText().toString().trim())

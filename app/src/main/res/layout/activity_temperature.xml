@@ -15,6 +15,7 @@
       android:background="@drawable/ic_arrow"
       android:layout_width="35dp"
       android:layout_height="35dp"
+      android:onClick="GetBack"
       android:layout_alignParentLeft="true" />
 <LinearLayout
     android:layout_width="wrap_content"

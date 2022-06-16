@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -106,6 +107,26 @@ public class CategoriesActivity extends AppCompatActivity {
     public void ClickProfile(View view) {
         redirectActivity(this, HomeActivity.class);
 
+    }
+    public void OpenWeb(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("go to browser");
+        builder.setMessage("do you want to open site?");
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent implicit = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.visteon.com"));
+                startActivity(implicit);
+                //System.exit(0);
+            }
+        });
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.show();
     }
 
     public void ClickRate(View view) {

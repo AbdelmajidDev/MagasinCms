@@ -64,7 +64,6 @@ public class AllReceivedTasksActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_received_tasks);
-        addTask = findViewById(R.id.addTask);
 
         String work=FirebaseAuth.getInstance().getCurrentUser().getEmail();
         String CurrentCsId=work.replace("@visteon.com","");
@@ -91,7 +90,7 @@ public class AllReceivedTasksActivity extends AppCompatActivity {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 x=document.get("receiver").toString();
                                 //if((mHour==01 && mMinute==22)||(mHour==14 && mMinute==00)||(mHour==22 && mMinute==00))
-                                if((mHour==14 && mMinute==34))
+                                if((mHour==23 && mMinute==23))
 
                                 {   mix="2"+n;
                                     FcmNotificationsSender notificationsSender=new FcmNotificationsSender("/topics/"+mix,"New task","Tap to Open"
@@ -100,7 +99,7 @@ public class AllReceivedTasksActivity extends AppCompatActivity {
                                     System.out.println("time :"+mix);
                                     document.getReference().update("receiver","2");
                                 }
-                                if((mHour==16 && mMinute==05)){
+                                if((mHour==23 && mMinute==21)){
                                     mix="3"+n;
                                     System.out.println("time :"+mix);
                                     FcmNotificationsSender notificationsSender=new FcmNotificationsSender("/topics/"+mix,"New task","Tap to Open"
@@ -108,7 +107,7 @@ public class AllReceivedTasksActivity extends AppCompatActivity {
                                     notificationsSender.SendNotifications();
                                     document.getReference().update("receiver","3");
                                 }
-                                if((mHour==6 && mMinute==00)){firebaseFirestore.collection(n).document(document.getId()).delete();}
+                                if((mHour==22 && mMinute==35)){firebaseFirestore.collection(n).document(document.getId()).delete();}
                                 }
                             }
                         else {
@@ -173,13 +172,6 @@ public class AllReceivedTasksActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
 
-        addTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AddTask.class);
-                startActivity(intent);
-            }
-        });
 
     }
 

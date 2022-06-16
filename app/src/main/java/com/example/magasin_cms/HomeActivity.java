@@ -143,6 +143,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 uploadProfileImage();
+                System.out.println(mAuth.getCurrentUser().getUid());
             }
         });
 
@@ -207,7 +208,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
             });
         }else {
-            pd.dismiss();
+           pd.dismiss();
             Toast.makeText(this, "Image not selected", Toast.LENGTH_SHORT).show();
         }
     }

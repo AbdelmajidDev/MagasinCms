@@ -12,7 +12,7 @@
         android:layout_marginTop="125dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="#302C21"
+        app:cardBackgroundColor="#428CDA"
         app:cardCornerRadius="40sp"
         app:cardElevation="5dp"
         app:cardMaxElevation="20sp"
@@ -34,7 +34,7 @@
                 android:padding="25dp"
                 android:layout_marginLeft="140dp"
                 android:text="Sent Tasks"
-                android:textColor="#FBF2B6"
+                android:textColor="@color/white"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -49,7 +49,7 @@
         android:layout_marginTop="62.5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="#302C21"
+        app:cardBackgroundColor="#428CDA"
         app:cardCornerRadius="40dp"
         app:cardElevation="5dp"
         android:onClick="ReceivedTasks">
@@ -69,7 +69,7 @@
                 android:padding="25dp"
                 android:layout_marginLeft="140dp"
                 android:text="Received Tasks"
-                android:textColor="#FBF2B6"
+                android:textColor="@color/white"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 

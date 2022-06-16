@@ -15,11 +15,17 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -31,6 +37,8 @@ public class DiscussionActivity extends AppCompatActivity {
     ListView lvDiscussionTopics;
     ArrayList<String> listOfDiscussion = new ArrayList<String>();
     ArrayAdapter arrayAdpt;
+    FirebaseFirestore fStore;
+    FirebaseAuth fAuth;
 
     String UserName;
 
@@ -40,6 +48,7 @@ public class DiscussionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discussion);
+        fStore = FirebaseFirestore.getInstance();
 
 
         lvDiscussionTopics = (ListView) findViewById(R.id.DiscussionId);
@@ -47,8 +56,20 @@ public class DiscussionActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, listOfDiscussion);
         lvDiscussionTopics.setAdapter(arrayAdpt);
 
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-        getUserName();
+        fStore.collection("users")
+                .document((mAuth.getCurrentUser().getEmail().replace("@visteon.com","")).toLowerCase())
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.getResult().exists()){
+                    UserName= task.getResult().getString("Fname").trim();
+                }
+            }
+        });
+
+        //getUserName();
 
 
         dbr.addValueEventListener(new ValueEventListener() {
@@ -86,7 +107,8 @@ public class DiscussionActivity extends AppCompatActivity {
     }
 
     private void getUserName(){
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+       /* final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final EditText userName = new EditText(this);
         builder.setMessage("what do you want to be called during this discussion?");
         builder.setView(userName);
@@ -106,6 +128,6 @@ public class DiscussionActivity extends AppCompatActivity {
                 finish();
             }
         });
-        builder.show();
+        builder.show();*/
     }
 }

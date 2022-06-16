@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -55,7 +56,6 @@ Button AllTasks;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_received_management);
-        addTask = findViewById(R.id.addTask);
         String work=FirebaseAuth.getInstance().getCurrentUser().getEmail();
         String CurrentCsId=work.replace("@visteon.com","");
         firebaseFirestore=FirebaseFirestore.getInstance();
@@ -79,12 +79,18 @@ Button AllTasks;
         AllTasks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
+                final ProgressDialog pd = new ProgressDialog(ReceivedTasks.this);
+                pd.setTitle("Retrieving data . . .");
+                pd.setTitle("Please wait , while we are setting your data ");
+                pd.show();
+                if(!(xdep.isEmpty())||!(xShift.isEmpty())){
                 Intent intent=new Intent(getApplicationContext(),AllReceivedTasksActivity.class);
+                pd.dismiss();
                 intent.putExtra("xdep",xdep);
                 intent.putExtra("xShift",xShift);
                 startActivity(intent);
+
+                }
             }
         });
 
@@ -144,14 +150,6 @@ Button AllTasks;
 
 
         recyclerView.setAdapter(adapter);
-
-        addTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AddTask.class);
-                startActivity(intent);
-            }
-        });
 
     }
 

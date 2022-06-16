@@ -117,7 +117,7 @@ public class SentTasks extends AppCompatActivity {
                     @Override
                     public boolean onLongClick(View view) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(SentTasks.this);
-                        builder.setTitle("Logout");
+                        builder.setTitle("Delete task");
                         builder.setMessage("Are you sure you want to delete this task?");
                         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             @Override

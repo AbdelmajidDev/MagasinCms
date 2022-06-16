@@ -6,7 +6,8 @@
     android:orientation="vertical"
     android:background="@drawable/round_bk2"
     android:gravity="bottom"
-    android:padding="20dp">
+    android:padding="20dp"
+    android:onClick="OpenWeb">
 
     <ImageView
         android:layout_width="110dp"

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +19,7 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.Calendar;
 
-public class TemperatureActivity extends AppCompatActivity {
+public class  TemperatureActivity extends AppCompatActivity {
   TextView CurrentTemp,CurrentHum;
     private DatabaseReference mDatabase;
     private DatabaseReference mb;
@@ -79,6 +80,10 @@ public class TemperatureActivity extends AppCompatActivity {
 
 
 
+    }
+    public void GetBack(View v){
+
+        finish();
     }
 
 }

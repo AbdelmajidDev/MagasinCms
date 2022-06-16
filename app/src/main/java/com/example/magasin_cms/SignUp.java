@@ -197,6 +197,12 @@ FirebaseFirestore fStore;
                                     System.out.println("Subscription : " + mix);
                                     System.out.println("Subscription : " + csID);
                                     Log.d(TAG, "C bon!!!!" + userID);
+                                }else{
+                                    mix = (CurrentShift + Department);
+                                    FirebaseMessaging.getInstance().subscribeToTopic(csID);
+                                    FirebaseMessaging.getInstance().subscribeToTopic(mix);
+                                    Log.d(TAG, "C bon!!!!" + userID);
+
                                 }
                             }
                         });
