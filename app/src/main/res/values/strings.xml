@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Magasin_Cms</string>
+    <string name="app_name">Visteon App</string>
     <string-array name="Departments">
         <item>Purchase</item>
         <item>Quality</item>
@@ -13,6 +13,11 @@
         <item>2</item>
         <item>3</item>
     </string-array>
+    <string name="aboutus">Visteon App is a productivity booster mobile app for android devices only
+    developed by Oussama Dallali and Abdelmajid Nasr during Graduation internship supervised by ms.Mariem Boughdiri
+    our App mainly consists of tasks management and temperature,humidity supervising with some other cool features like
+    live chat and a To-Do-List to help every Visteon corporation employee with their daily duties </string>
+
     <string name="NotifyAll">Send to one person</string>
     <string name="doubleoptionCSID">type receiver\'s csID or Email</string>
     <string name="CurrentShift">CURRENT SHIFT: this field is optional</string>

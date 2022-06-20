@@ -59,11 +59,14 @@ FloatingActionButton fab;
         String q=j.getStringExtra("d");
         String t=j.getStringExtra("f");
        String id=j.getStringExtra("e");
+       String x1=j.getStringExtra("x1");
        String PreviousAct=j.getStringExtra("PreviousAct");
         stitle.setText("Task Title : "+m);
         sdesc.setText("Task Description : "+p);
         sdate.setText("Task Date : "+n);
-
+        System.out.println("departemtn delete;"+x1);
+        System.out.println("id delete : "+id);
+        System.out.println("assigned by: "+t);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,7 +144,43 @@ FloatingActionButton fab;
                     builder.show();
 
 
-                }else {  Toast.makeText(getApplicationContext(),"You cannot perform this action",Toast.LENGTH_SHORT).show();}
+                }else if(PreviousAct.equals("AllReceivedTasksActivity"))
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(specificActivity.this);
+                    builder.setTitle("Task completed");
+                    builder.setMessage(t);
+                    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            fStore.collection("tasks").document(t)
+                                    .collection("Sent").whereEqualTo("title", m).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                            Log.d(TAG, document.getId() + " => " + document.getData());
+                                            fStore.collection(x1).document(id).delete();
+                                            fStore.collection("tasks")
+                                                    .document(document.get("Assigned_by").toString()).collection("Sent")
+                                                    .document(document.getId()).update("status", "completed");
+
+                                        }
+                                    }
+
+                                }
+                            });
+                        }
+                    });
+                    builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    builder.show();
+                     }else{Toast.makeText(getApplicationContext(),"You cannot perform this action",Toast.LENGTH_SHORT).show();}
             }
         });
 }

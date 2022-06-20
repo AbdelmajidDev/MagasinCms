@@ -6,7 +6,7 @@
     app:cardUseCompatPadding="true"
     app:cardElevation="5dp"
     app:cardBackgroundColor="@color/transparent"
-    app:cardCornerRadius="40sp"
+    app:cardCornerRadius="30sp"
     app:contentPadding="4dp"
     android:id="@+id/Task_Card"
     android:layout_height="200dp">

@@ -98,9 +98,12 @@ public class CategoriesActivity extends AppCompatActivity {
     private static void openDrawer(DrawerLayout drawerLayout) {
         drawerLayout.openDrawer(GravityCompat.START);
     }
+    private static void closeDrawer(DrawerLayout drawerLayout){
+        drawerLayout.closeDrawer(GravityCompat.START);
+    }
 
     public void ClickHome(View view) {
-        recreate();
+        closeDrawer(drawerLayout);
 
     }
 
@@ -131,10 +134,6 @@ public class CategoriesActivity extends AppCompatActivity {
 
     public void ClickRate(View view) {
         redirectActivity(this, RateUsActivity.class);
-    }
-
-    public void ClickTemperature(View view) {
-        redirectActivity(this, TemperatureActivity.class);
     }
 
     public void ClickTaskManagment(View view) {

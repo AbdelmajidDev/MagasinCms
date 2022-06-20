@@ -99,7 +99,7 @@ public class AllReceivedTasksActivity extends AppCompatActivity {
                                     System.out.println("time :"+mix);
                                     document.getReference().update("receiver","2");
                                 }
-                                if((mHour==23 && mMinute==21)){
+                                if((mHour==14 && mMinute==00)){
                                     mix="3"+n;
                                     System.out.println("time :"+mix);
                                     FcmNotificationsSender notificationsSender=new FcmNotificationsSender("/topics/"+mix,"New task","Tap to Open"
@@ -107,7 +107,7 @@ public class AllReceivedTasksActivity extends AppCompatActivity {
                                     notificationsSender.SendNotifications();
                                     document.getReference().update("receiver","3");
                                 }
-                                if((mHour==22 && mMinute==35)){firebaseFirestore.collection(n).document(document.getId()).delete();}
+                                if((mHour==22 && mMinute==00)){firebaseFirestore.collection(n).document(document.getId()).delete();}
                                 }
                             }
                         else {
@@ -146,7 +146,6 @@ public class AllReceivedTasksActivity extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull TaskViewHolder holder, int position, @NonNull TaskModel model) {
                 holder.task_title.setText(model.getTitle());
                 holder.task_details.setText(model.getDescription());
-                holder.task_receiver.setText(model.getReceiver());
                 holder.task_ReceiverCs.setText(model.getReceiver());
 
 
@@ -162,6 +161,9 @@ public class AllReceivedTasksActivity extends AppCompatActivity {
                         intent.putExtra("c",model.getDescription());
                         intent.putExtra("d",model.getReceiver());
                         intent.putExtra("e",model.getItem_id());
+                        intent.putExtra("f",model.getAssigned_by());
+                        intent.putExtra("PreviousAct","AllReceivedTasksActivity");
+                        intent.putExtra("x1",n);
                         startActivity(intent);
                     }
                 });

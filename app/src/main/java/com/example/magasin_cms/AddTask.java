@@ -150,7 +150,7 @@ public class AddTask extends AppCompatActivity implements SingleChoiceDialogFrag
             @Override
             public void onClick(View view) {
                 SendData(view);
-                finishAffinity();
+                finish();
             }
         });
 
